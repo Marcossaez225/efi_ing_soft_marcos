@@ -1,0 +1,10 @@
+<!-- templates/index.html -->
+{% extends 'base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<h2>Bienvenido a Mi Concesionaria</h2>
+<p>Explora nuestra amplia selección de vehículos y encuentra el perfecto para ti.</p>
+<a href="{% url 'vehicle_list' %}">Ver todos los vehículos</a>
+{% endblock %}

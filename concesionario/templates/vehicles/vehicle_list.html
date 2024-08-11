@@ -1,0 +1,20 @@
+<!-- templates/vehicles/vehicle_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Lista de Vehículos{% endblock %}
+
+{% block content %}
+<h2>Lista de Vehículos</h2>
+<ul>
+    {% for vehicle in vehicles %}
+        <li>
+            <a href="{% url 'vehicle_detail' vehicle.id %}">
+                {{ vehicle.brand.name }} {{ vehicle.model }} - ${{ vehicle.price_in_usd }}
+            </a>
+        </li>
+    {% empty %}
+        <li>No hay vehículos disponibles.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'vehicle_create' %}">Agregar nuevo vehículo</a>
+{% endblock %}
