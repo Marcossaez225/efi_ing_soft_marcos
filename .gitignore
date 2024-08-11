@@ -25,3 +25,6 @@ local_settings.py
 
 # Virtual environment
 entorno/
+
+# Environment variables
+.env

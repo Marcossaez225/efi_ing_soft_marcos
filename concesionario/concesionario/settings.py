@@ -34,8 +34,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'vehicles',
+    'media',
     #'comments',
-    #'media',
     #'users',
 ]
 
@@ -101,3 +101,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Tipo de campo de clave primaria por defecto
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

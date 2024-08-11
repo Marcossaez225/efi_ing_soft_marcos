@@ -1,20 +1,25 @@
 <!-- templates/vehicles/vehicle_list.html -->
 {% extends 'base.html' %}
+{% load static %}  
 
-{% block title %}Lista de Vehículos{% endblock %}
+{% block title %}Vehicle List{% endblock %}
 
 {% block content %}
-<h2>Lista de Vehículos</h2>
+<h2>Vehicle List</h2>
 <ul>
     {% for vehicle in vehicles %}
-        <li>
-            <a href="{% url 'vehicle_detail' vehicle.id %}">
-                {{ vehicle.brand.name }} {{ vehicle.model }} - ${{ vehicle.price_in_usd }}
-            </a>
-        </li>
+    <li>
+        {% with vehicle.images.first as main_image %}
+            {% if main_image %}
+                <img src="{{ main_image.image.url }}" alt="Cover Image" width="150">
+            {% else %}
+                <img src="{% static 'images/no_image_available.png' %}" alt="No Image" width="150">
+            {% endif %}
+        {% endwith %}
+        {{ vehicle.brand.name }} {{ vehicle.model }} - ${{ vehicle.price_in_usd }}
+    </li>
     {% empty %}
-        <li>No hay vehículos disponibles.</li>
+    <li>No vehicles are available at this time.</li>
     {% endfor %}
 </ul>
-<a href="{% url 'vehicle_create' %}">Agregar nuevo vehículo</a>
 {% endblock %}
