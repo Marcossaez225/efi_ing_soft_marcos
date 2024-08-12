@@ -1,27 +1,38 @@
 <!-- templates/vehicles/vehicle_detail.html -->
+
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ vehicle.brand }} {{ vehicle.model }}{% endblock %}
 
 {% block content %}
-<h2>{{ vehicle.brand }} {{ vehicle.model }}</h2>
-<p>Year: {{ vehicle.year_of_manufacture }}</p>
-<p>Price: ${{ vehicle.price_in_usd }}</p>
-<p>Fuel Type: {{ vehicle.get_fuel_type_display }}</p>
-<p>Number of Doors: {{ vehicle.number_of_doors }}</p>
-<p>Engine Displacement: {{ vehicle.engine_displacement }}</p>
+<div class="vehicle-card">
+    <div class="vehicle-image">
+        {% if images %}
+            {% for image in images %}
+                <a href="{{ image.image.url }}" target="_blank">
+                    <img src="{{ image.image.url }}" alt="Vehicle Image">
+                </a>
+            {% endfor %}
+        {% else %}
+            <a href="{% static 'images/no_image_available.png' %}" target="_blank">
+                <img src="{% static 'images/no_image_available.png' %}" alt="No Image Available">
+            </a>
+        {% endif %}
+    </div>
+    <div class="vehicle-details">
+        <h2>{{ vehicle.brand }} {{ vehicle.model }}</h2>
+        <p><strong>Year:</strong> {{ vehicle.year_of_manufacture }}</p>
+        <p><strong>Price:</strong> ${{ vehicle.price_in_usd }}</p>
+        <p><strong>Fuel Type:</strong> {{ vehicle.get_fuel_type_display }}</p>
+        <p><strong>Number of Doors:</strong> {{ vehicle.number_of_doors }}</p>
+        <p><strong>Engine Displacement:</strong> {{ vehicle.engine_displacement }}</p>
+        
+        {% if user.is_authenticated and user.is_staff %}
+            <a href="{% url 'image_upload' vehicle.pk %}">Upload Image</a>
+        {% endif %}
+    </div>
+</div>
 
-<h3>Images</h3>
-<ul>
-    {% for image in vehicle.images.all %}
-    <li>
-        <img src="{{ image.image.url }}" alt="Vehicle Image" width="150">
-    </li>
-    {% empty %}
-    <li>No images available.</li>
-    {% endfor %}
-</ul>
-
-<!-- Incluye la sección de comentarios -->
 {% include 'comments/comments_section.html' %}
 {% endblock %}

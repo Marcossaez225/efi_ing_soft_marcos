@@ -1,5 +1,12 @@
 <!-- templates/partials/footer.html -->
 <footer>
-    <p>&copy; 2024 Mi Concesionaria</p>
-    <p>Contact us: <a href="mailto:info@concesionaria.com">info@concesionaria.com</a></p>
+    <div class="footer-content">
+        <p>&copy; {{ dealership_name }}</p>
+        <!-- Solo muestra el contacto, sin el horario de apertura -->
+        <p>Contact: 
+            <a href="mailto:{{ contact_email }}">{{ contact_email }}</a> | 
+            <a href="tel:{{ contact_phone }}">{{ contact_phone }}</a>
+            <p>&copy; 2024 Mi Concesionaria</p>
+        </p>
+    </div>
 </footer>

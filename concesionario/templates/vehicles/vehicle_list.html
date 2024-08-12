@@ -1,4 +1,5 @@
 <!-- templates/vehicles/vehicle_list.html -->
+
 {% extends 'base.html' %}
 {% load static %}
 
@@ -6,18 +7,21 @@
 
 {% block content %}
 <h2>Vehicle List</h2>
+<form method="get" class="vehicle-filter-form">
+    {{ form.as_p }}
+    <button type="submit">Filter</button>
+</form>
+
 <ul>
     {% for vehicle in vehicles %}
-    <li>
+    <li class="vehicle-item">
         <a href="{% url 'vehicle_detail' vehicle.id %}">
-            {% with vehicle.images.first as main_image %}
-                {% if main_image %}
-                    <img src="{{ main_image.image.url }}" alt="Cover Image" width="150">
-                {% else %}
-                    <img src="{% static 'images/no_image_available.png' %}" alt="No Image" width="150">
-                {% endif %}
-            {% endwith %}
-            {{ vehicle.brand.name }} {{ vehicle.model }} - ${{ vehicle.price_in_usd }}
+            {% if vehicle.image %}
+                <img src="{{ vehicle.image.image.url }}" alt="Cover Image" width="150">
+            {% else %}
+                <img src="{% static 'images/no_image_available.png' %}" alt="No Image" width="150">
+            {% endif %}
+            <h2>{{ vehicle.brand }} {{ vehicle.model }} - ${{ vehicle.price_in_usd }}</h2>
         </a>
     </li>
     {% empty %}

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 class Brand(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -31,3 +32,6 @@ class Vehicle(models.Model):
 
     def __str__(self):
         return f"{self.brand.name} {self.model} ({self.year_of_manufacture})"
+
+    def get_absolute_url(self):
+        return reverse('vehicle_detail', kwargs={'pk': self.pk})
