@@ -1,16 +1,27 @@
 <!-- templates/vehicles/vehicle_detail.html -->
 {% extends 'base.html' %}
 
-{% block title %}Vehicle Details{% endblock %}
+{% block title %}{{ vehicle.brand }} {{ vehicle.model }}{% endblock %}
 
 {% block content %}
-<h2>{{ vehicle.brand.name }} {{ vehicle.model }}</h2>
-<p>Year of Manufacture: {{ vehicle.year_of_manufacture }}</p>
-<p>Number of Doors: {{ vehicle.number_of_doors }}</p>
-<p>Engine Displacement: {{ vehicle.engine_displacement }} L</p>
-<p>Fuel Type: {{ vehicle.get_fuel_type_display }}</p>
-<p>Country of Manufacture: {{ vehicle.country_of_manufacture.name }}</p>
+<h2>{{ vehicle.brand }} {{ vehicle.model }}</h2>
+<p>Year: {{ vehicle.year_of_manufacture }}</p>
 <p>Price: ${{ vehicle.price_in_usd }}</p>
+<p>Fuel Type: {{ vehicle.get_fuel_type_display }}</p>
+<p>Number of Doors: {{ vehicle.number_of_doors }}</p>
+<p>Engine Displacement: {{ vehicle.engine_displacement }}</p>
 
-<a href="{% url 'vehicle_list' %}">Back to list</a>
+<h3>Images</h3>
+<ul>
+    {% for image in vehicle.images.all %}
+    <li>
+        <img src="{{ image.image.url }}" alt="Vehicle Image" width="150">
+    </li>
+    {% empty %}
+    <li>No images available.</li>
+    {% endfor %}
+</ul>
+
+<!-- Incluye la sección de comentarios -->
+{% include 'comments/comments_section.html' %}
 {% endblock %}

@@ -35,8 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'vehicles',
     'media',
-    #'comments',
-    #'users',
+    'users',
+    'comments',
 ]
 
 # Middleware
@@ -99,9 +99,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-# Tipo de campo de clave primaria por defecto
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 # Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Tipo de campo de clave primaria por defecto
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Redirect to the profile login
+LOGIN_REDIRECT_URL = 'profile'
+
+# concesionario/settings.py
+LOGOUT_REDIRECT_URL = 'home'  

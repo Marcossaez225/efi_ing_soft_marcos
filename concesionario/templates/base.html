@@ -8,20 +8,12 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="{% url 'vehicle_list' %}">Cars</a></li>
-            </ul>
-        </nav>
-    </header>
+    {% include 'partials/header.html' %}
     <main>
         {% block content %}
         {% endblock %}
     </main>
-    <footer>
-        <p>&copy; 2024 Mi Concesionaria</p>
-    </footer>
-
+    {% include 'partials/footer.html' %}
+    {% include 'partials/messages.html' %}
 </body>
 </html>

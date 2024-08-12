@@ -1,6 +1,6 @@
 <!-- templates/vehicles/vehicle_list.html -->
 {% extends 'base.html' %}
-{% load static %}  
+{% load static %}
 
 {% block title %}Vehicle List{% endblock %}
 
@@ -9,14 +9,16 @@
 <ul>
     {% for vehicle in vehicles %}
     <li>
-        {% with vehicle.images.first as main_image %}
-            {% if main_image %}
-                <img src="{{ main_image.image.url }}" alt="Cover Image" width="150">
-            {% else %}
-                <img src="{% static 'images/no_image_available.png' %}" alt="No Image" width="150">
-            {% endif %}
-        {% endwith %}
-        {{ vehicle.brand.name }} {{ vehicle.model }} - ${{ vehicle.price_in_usd }}
+        <a href="{% url 'vehicle_detail' vehicle.id %}">
+            {% with vehicle.images.first as main_image %}
+                {% if main_image %}
+                    <img src="{{ main_image.image.url }}" alt="Cover Image" width="150">
+                {% else %}
+                    <img src="{% static 'images/no_image_available.png' %}" alt="No Image" width="150">
+                {% endif %}
+            {% endwith %}
+            {{ vehicle.brand.name }} {{ vehicle.model }} - ${{ vehicle.price_in_usd }}
+        </a>
     </li>
     {% empty %}
     <li>No vehicles are available at this time.</li>

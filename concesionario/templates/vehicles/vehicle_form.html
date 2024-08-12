@@ -1,14 +1,13 @@
 <!-- templates/vehicles/vehicle_form.html -->
 {% extends 'base.html' %}
 
-{% block title %}Crear Nuevo Vehículo{% endblock %}
+{% block title %}{{ view.action }} Vehicle{% endblock %}
 
 {% block content %}
-<h2>Crear Nuevo Vehículo</h2>
+<h2>{{ view.action }} Vehicle</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Guardar</button>
+    <button type="submit">{{ view.action }}</button>
 </form>
-<a href="{% url 'vehicle_list' %}">Cancelar</a>
 {% endblock %}

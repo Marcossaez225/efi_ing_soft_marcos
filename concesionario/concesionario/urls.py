@@ -10,6 +10,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('vehicles/', include('vehicles.urls')),
     path('media/', include('media.urls')),
+    path('users/', include('users.urls')), 
+    path('comments/', include('comments.urls')),  # Asegúrate de incluir esto
     path('', HomePageView.as_view(), name='home'),
 ]
 

@@ -1,0 +1,25 @@
+<!-- templates/partials/header.html -->
+<header>
+    <nav>
+        <ul>
+            <li><a href="{% url 'vehicle_list' %}">Cars</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'profile' %}">Account</a></li>
+                {% if user.is_superuser %}
+                    <li><a href="{% url 'vehicle_create' %}">Add Vehicle</a></li>
+                {% endif %}
+                <li>
+                    <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer; padding: 0; font: inherit; text-decoration: underline;">Logout</button>
+                    </form>
+                </li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+        </ul>
+        
+        
+    </nav>
+</header>
