@@ -1,4 +1,8 @@
+<!-- comments/templates/comments/comment_form.html -->
+
 {% extends 'base.html' %}
+
+{% block title %}{% if object %}Edit{% else %}Add{% endif %} Comment{% endblock %}
 
 {% block content %}
 <h2>{% if object %}Edit{% else %}Add{% endif %} Comment</h2>
@@ -7,4 +11,6 @@
     {{ form.as_p }}
     <button type="submit">Save</button>
 </form>
+<!-- Asegúrate de que estás usando el vehículo del contexto -->
+<a href="{% url 'vehicle_detail' vehicle.pk %}">Back to Vehicle</a>
 {% endblock %}

@@ -22,8 +22,8 @@ load_env_file()
 
 # Seguridad
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'default-secret-key-for-development-only')
-DEBUG = True  # Cambiar a False en producción
-ALLOWED_HOSTS = []  # Añadir dominios o direcciones IP permitidas en producción
+DEBUG = True  
+ALLOWED_HOSTS = ['*'] # Añadir dominios o direcciones IP permitidas en producción
 
 # Aplicaciones instaladas
 INSTALLED_APPS = [
@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'concesionario.context_processors.dealership_info',
+                'users.context_processors.user_status',
             ],
         },
     },
@@ -99,6 +100,7 @@ USE_TZ = True
 # Archivos estáticos
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
 
 # Media
 MEDIA_URL = '/media/'

@@ -4,10 +4,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
-from .models import Vehicle
-from comments.forms import CommentForm
+from .models import Vehicle, FollowedVehicle
 from media.models import VehicleImage
 from .forms import VehicleForm, VehicleSortFilterForm
+from comments.forms import CommentForm
+from comments.views import get_ordered_comments
 
 class VehicleListView(ListView):
     model = Vehicle
@@ -55,15 +56,27 @@ class VehicleDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         vehicle = self.get_object()
-        context['comments'] = vehicle.comments.all()  # Asegúrate de que los comentarios están siendo agregados al contexto
-        context['images'] = vehicle.images.all()  # Agregar imágenes al contexto
+        
+        # Obtener la imagen principal (portada) o la primera imagen disponible
+        main_image = vehicle.images.filter(is_main=True).first()
+        if not main_image:
+            main_image = vehicle.images.first()
+
+        context['main_image'] = main_image
+        context['comments'] = get_ordered_comments(vehicle)
+        context['images'] = vehicle.images.all()
+        context['form'] = CommentForm()
+
+        # Verificar si el usuario sigue el vehículo
+        if self.request.user.is_authenticated:
+            context['is_followed'] = FollowedVehicle.objects.filter(user=self.request.user, vehicle=vehicle).exists()
+
         return context
 
 class VehicleCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Vehicle
     template_name = 'vehicles/vehicle_form.html'
     form_class = VehicleForm
-    login_url = 'login'
 
     def test_func(self):
         return self.request.user.is_staff
@@ -86,7 +99,6 @@ class VehicleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Vehicle
     template_name = 'vehicles/vehicle_form.html'
     form_class = VehicleForm
-    login_url = 'login'
 
     def test_func(self):
         return self.request.user.is_staff
@@ -103,3 +115,35 @@ class VehicleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             VehicleImage.objects.create(vehicle=self.object, image=image)
         
         return response
+
+def follow_vehicle(request, vehicle_id):
+    """
+    Permite a un usuario autenticado seguir un vehículo.
+
+    Parámetros:
+        request: La solicitud HTTP.
+        vehicle_id: El ID del vehículo a seguir.
+
+    Retorna:
+        Redirige a la página de detalles del vehículo seguido.
+    """
+    vehicle = get_object_or_404(Vehicle, id=vehicle_id)
+    FollowedVehicle.objects.get_or_create(user=request.user, vehicle=vehicle)
+    return redirect('vehicle_detail', pk=vehicle.id)
+
+def unfollow_vehicle(request, vehicle_id):
+    """
+    Permite a un usuario autenticado dejar de seguir un vehículo.
+
+    Parámetros:
+        request: La solicitud HTTP.
+        vehicle_id: El ID del vehículo a dejar de seguir.
+
+    Retorna:
+        Redirige a la página de detalles del vehículo.
+    """
+    vehicle = get_object_or_404(Vehicle, id=vehicle_id)
+    followed_vehicle = FollowedVehicle.objects.filter(user=request.user, vehicle=vehicle).first()
+    if followed_vehicle:
+        followed_vehicle.delete()
+    return redirect('vehicle_detail', pk=vehicle.id)

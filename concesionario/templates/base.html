@@ -6,14 +6,16 @@
     <meta charset="UTF-8">
     <title>{% block title %}Mi Concesionaria{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Verificando que se carga base.html -->
+    <script>console.log('Base template loaded');</script>
 </head>
 <body>
     {% include 'partials/header.html' %}
     <main>
+        {% include 'partials/messages.html' %}
         {% block content %}
         {% endblock %}
     </main>
     {% include 'partials/footer.html' %}
-    {% include 'partials/messages.html' %}
 </body>
 </html>

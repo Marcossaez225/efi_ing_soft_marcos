@@ -1,4 +1,7 @@
+<!-- templates/users/profile.html -->
+
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}User Profile{% endblock %}
 
@@ -6,4 +9,29 @@
 <h2>My Profile</h2>
 <p>Welcome, {{ user.username }}!</p>
 <p>Email: {{ user.email }}</p>
+
+<h3>Followed Vehicles</h3>
+<ul>
+  {% for follow in followed_vehicles %}
+    <li style="display: flex; align-items: center; margin-bottom: 10px;">
+      {% with follow.vehicle.images.first as vehicle_image %}
+        {% if vehicle_image %}
+          <img src="{{ vehicle_image.image.url }}" alt="{{ follow.vehicle.model }}" style="width: 40px; height: 40px; margin-right: 10px; object-fit: cover;">
+        {% else %}
+          <img src="{% static 'images/no_image_available.png' %}" alt="No Image Available" style="width: 40px; height: 40px; margin-right: 10px; object-fit: cover;">
+        {% endif %}
+      {% endwith %}
+      <a href="{% url 'vehicle_detail' follow.vehicle.id %}" style="text-decoration: none; color: inherit;">
+        <span>{{ follow.vehicle.brand.name }} {{ follow.vehicle.model }} ({{ follow.vehicle.year_of_manufacture }})</span>
+      </a>
+      <form method="post" action="{% url 'unfollow_vehicle' follow.vehicle.id %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="unfollow-button">✖️</button>
+      </form>
+    </li>
+  {% empty %}
+    <p>You are not following any vehicles.</p>
+  {% endfor %}
+</ul>
+
 {% endblock %}

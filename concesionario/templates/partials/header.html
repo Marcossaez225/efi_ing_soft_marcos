@@ -2,17 +2,18 @@
 <header>
     <nav>
         <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            
             <li><a href="{% url 'vehicle_list' %}">Cars</a></li>
-            {% if user.is_authenticated %}
-                <li><a href="{% url 'profile' %}">Account</a></li>
-                {% if user.is_staff %}
-                    <li><a href="{% url 'vehicle_create' %}">Add vehicle</a></li>
+            {% if is_authenticated %}
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+                {% if is_staff %}
                     <li><a href="{% url 'admin:index' %}">Admin</a></li>
                 {% endif %}
                 <li>
-                    <form id="logout-form" action="{% url 'logout' %}" method="post">
+                    <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: inline;">
                         {% csrf_token %}
-                        <button type="submit">Logout</button>
+                        <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer; padding: 0; font: inherit; text-decoration: underline;">Logout</button>
                     </form>
                 </li>
             {% else %}

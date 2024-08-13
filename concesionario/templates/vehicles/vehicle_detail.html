@@ -3,36 +3,72 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ vehicle.brand }} {{ vehicle.model }}{% endblock %}
+{% block title %}{{ vehicle.brand.name }} {{ vehicle.model }}{% endblock %}
 
 {% block content %}
-<div class="vehicle-card">
-    <div class="vehicle-image">
-        {% if images %}
-            {% for image in images %}
-                <a href="{{ image.image.url }}" target="_blank">
-                    <img src="{{ image.image.url }}" alt="Vehicle Image">
-                </a>
-            {% endfor %}
+<h2>{{ vehicle.brand.name }} {{ vehicle.model }} ({{ vehicle.year_of_manufacture }})</h2>
+
+<div style="display: flex;">
+    <!-- Imagen de portada grande -->
+    <div style="flex: 1;">
+        {% if main_image %}
+            <img id="mainImage" src="{{ main_image.image.url }}" alt="{{ vehicle.model }}" style="max-width: 100%; height: auto;">
         {% else %}
-            <a href="{% static 'images/no_image_available.png' %}" target="_blank">
-                <img src="{% static 'images/no_image_available.png' %}" alt="No Image Available">
-            </a>
+            <img id="mainImage" src="{% static 'images/no_image_available.png' %}" alt="No Image Available" style="max-width: 100%; height: auto;">
         {% endif %}
     </div>
-    <div class="vehicle-details">
-        <h2>{{ vehicle.brand }} {{ vehicle.model }}</h2>
-        <p><strong>Year:</strong> {{ vehicle.year_of_manufacture }}</p>
+
+    <!-- Detalles del vehículo -->
+    <div style="flex: 1; padding-left: 20px;">
         <p><strong>Price:</strong> ${{ vehicle.price_in_usd }}</p>
-        <p><strong>Fuel Type:</strong> {{ vehicle.get_fuel_type_display }}</p>
-        <p><strong>Number of Doors:</strong> {{ vehicle.number_of_doors }}</p>
+        <p><strong>Brand:</strong> {{ vehicle.brand.name }}</p>
+        <p><strong>Model:</strong> {{ vehicle.model }}</p>
+        <p><strong>Country of Manufacture:</strong> {{ vehicle.country_of_manufacture }}</p>
         <p><strong>Engine Displacement:</strong> {{ vehicle.engine_displacement }}</p>
-        
-        {% if user.is_authenticated and user.is_staff %}
-            <a href="{% url 'image_upload' vehicle.pk %}">Upload Image</a>
-        {% endif %}
+        <p><strong>Fuel Type:</strong> {{ vehicle.fuel_type }}</p>
+        <p><strong>Number of Doors:</strong> {{ vehicle.number_of_doors }}</p>
+        <p><strong>Year of Manufacture:</strong> {{ vehicle.year_of_manufacture }}</p>
     </div>
 </div>
 
-{% include 'comments/comments_section.html' %}
+<!-- Galería de fotos pequeñas -->
+<h3>Gallery</h3>
+<div style="display: flex; gap: 10px; overflow-x: auto; padding-top: 20px;">
+    {% for image in images %}
+        <img src="{{ image.image.url }}" alt="{{ vehicle.model }}" style="height: 100px; width: auto; cursor: pointer;" onclick="document.getElementById('mainImage').src='{{ image.image.url }}'">
+    {% endfor %}
+</div>
+
+<!-- Sección de comentarios -->
+<h3>Comments</h3>
+{% if user.is_authenticated %}
+    <form method="post" action="{% url 'comment_create' vehicle.pk %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Comment</button>
+    </form>
+{% else %}
+    <p>You need to be logged in to add comments.</p>
+{% endif %}
+
+<ul>
+    {% for comment in comments %}
+    <li>
+        <p><strong>{{ comment.user.username }}</strong> ({{ comment.created_at }}):</p>
+        <p>{{ comment.text }}</p>
+        {% if user.is_authenticated %}
+            {% if user == comment.user or user.is_staff %}
+                <a href="{% url 'comment_update' comment.pk %}">Edit</a>
+                <form method="post" action="{% url 'comment_delete' comment.pk %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este comentario?');">Delete</button>
+                </form>
+            {% endif %}
+        {% endif %}
+    </li>
+    {% empty %}
+    <li>No comments yet.</li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
