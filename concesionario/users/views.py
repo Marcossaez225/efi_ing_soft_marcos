@@ -49,7 +49,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         return context
 
 @login_required
-def unfollow_vehicle(request, vehicle_id):
+def unfollow_vehicle_from_profile(request, vehicle_id):
     """
     Permite a un usuario autenticado dejar de seguir un vehículo.
 

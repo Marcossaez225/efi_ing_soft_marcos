@@ -24,7 +24,7 @@
       <a href="{% url 'vehicle_detail' follow.vehicle.id %}" style="text-decoration: none; color: inherit;">
         <span>{{ follow.vehicle.brand.name }} {{ follow.vehicle.model }} ({{ follow.vehicle.year_of_manufacture }})</span>
       </a>
-      <form method="post" action="{% url 'unfollow_vehicle' follow.vehicle.id %}" style="display:inline;">
+      <form method="post" action="{% url 'unfollow_vehicle_from_profile' follow.vehicle.id %}" style="display:inline;">
         {% csrf_token %}
         <button type="submit" class="unfollow-button">✖️</button>
       </form>
