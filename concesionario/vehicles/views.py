@@ -51,7 +51,7 @@ class VehicleListView(ListView):
         
         return context
 
-class VehicleDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+class VehicleDetailView(DetailView):
     model = Vehicle
     template_name = 'vehicles/vehicle_detail.html'
     context_object_name = 'vehicle'
@@ -70,7 +70,7 @@ class VehicleDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
         context['images'] = vehicle.images.all()
         context['form'] = CommentForm()
 
-        # Formulario de subida de imágenes
+        # Formulario de subida de imágenes solo para administradores
         if self.request.user.is_staff:
             context['image_form'] = VehicleImageForm()
 
@@ -91,13 +91,6 @@ class VehicleDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
                 return redirect('vehicle_detail', pk=self.object.pk)
         return self.get(request, *args, **kwargs)  # Si no es una solicitud POST válida, realiza la solicitud GET habitual
 
-    def test_func(self):
-        # Solo permite a los usuarios staff (administradores) subir imágenes
-        return self.request.user.is_staff
-
-    def handle_no_permission(self):
-        # Redirige a la página de inicio si el usuario no tiene permisos
-        return redirect('home')
 
 class VehicleCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Vehicle
