@@ -26,14 +26,6 @@ class VehicleImageInline(admin.TabularInline):
             VehicleImage.objects.filter(vehicle=obj.vehicle, is_main=True).update(is_main=False)
         return super().save_existing(form, obj, commit)
 
-@admin.register(Brand)
-class BrandAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-
-@admin.register(Country)
-class CountryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-
 @admin.register(Vehicle)
 class VehicleAdmin(admin.ModelAdmin):
     list_display = (
@@ -42,6 +34,12 @@ class VehicleAdmin(admin.ModelAdmin):
     )
     inlines = [VehicleImageInline]  # Incluir las imágenes como inlines
 
+    # Agregar filtros en la barra lateral del admin
+    list_filter = ('brand', 'country_of_manufacture', 'fuel_type', 'year_of_manufacture')
+
+    # Agregar cuadro de búsqueda en la parte superior del admin
+    search_fields = ('model', 'brand__name', 'country_of_manufacture__name')
+
     def get_brand_name(self, obj):
         return obj.brand.name
     get_brand_name.short_description = 'Marca'
@@ -49,3 +47,12 @@ class VehicleAdmin(admin.ModelAdmin):
     def get_country_name(self, obj):
         return obj.country_of_manufacture.name
     get_country_name.short_description = 'País de Fabricación'
+
+# Registrar otros modelos
+@admin.register(Brand)
+class BrandAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+@admin.register(Country)
+class CountryAdmin(admin.ModelAdmin):
+    list_display = ('name',)

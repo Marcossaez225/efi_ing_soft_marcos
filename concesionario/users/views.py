@@ -1,5 +1,3 @@
-# users/views.py
-
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import CreateView, TemplateView
 from django.urls import reverse_lazy
@@ -10,55 +8,62 @@ from django.contrib.auth.decorators import login_required
 from django.apps import apps
 from .forms import UserRegistrationForm, UserLoginForm
 
-# Acceder al modelo FollowedVehicle usando apps.get_model
+# Access the FollowedVehicle model using apps.get_model
 FollowedVehicle = apps.get_model('vehicles', 'FollowedVehicle')
 
+# View for user registration
 class UserRegistrationView(CreateView):
     form_class = UserRegistrationForm
     template_name = 'users/register.html'
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
+        # Display a success message on successful registration
         response = super().form_valid(form)
         messages.success(self.request, "Registration successful. You can now log in.")
         return response
 
+# View for user login
 class UserLoginView(LoginView):
     form_class = UserLoginForm
     template_name = 'users/login.html'
 
     def form_valid(self, form):
+        # Display a success message on successful login
         messages.success(self.request, "You have successfully logged in.")
         return super().form_valid(form)
 
+# View for user logout
 class UserLogoutView(LoginRequiredMixin, LogoutView):
     next_page = 'home'
 
     def dispatch(self, request, *args, **kwargs):
+        # Display a success message on successful logout
         messages.success(request, "You have successfully logged out.")
         return super().dispatch(request, *args, **kwargs)
 
+# View for displaying the user's profile
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'users/profile.html'
     login_url = 'login'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Obtener los vehículos seguidos por el usuario autenticado
+        # Retrieve vehicles followed by the authenticated user
         context['followed_vehicles'] = FollowedVehicle.objects.filter(user=self.request.user).select_related('vehicle')
         return context
 
 @login_required
 def unfollow_vehicle_from_profile(request, vehicle_id):
     """
-    Permite a un usuario autenticado dejar de seguir un vehículo.
+    Allows an authenticated user to unfollow a vehicle.
 
-    Parámetros:
-        request: La solicitud HTTP.
-        vehicle_id: El ID del vehículo a dejar de seguir.
+    Parameters:
+        request: The HTTP request.
+        vehicle_id: The ID of the vehicle to unfollow.
 
-    Retorna:
-        Redirige a la página de perfil del usuario.
+    Returns:
+        Redirects to the user's profile page.
     """
     followed_vehicle = FollowedVehicle.objects.filter(user=request.user, vehicle_id=vehicle_id).first()
     if followed_vehicle:

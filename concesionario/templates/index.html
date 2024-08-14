@@ -1,9 +1,20 @@
 <!-- templates/index.html -->
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Inicio{% endblock %}
+{% block title %}Welcome to Your Trusted Car Dealer{% endblock %}
 
 {% block content %}
-<h2>Welcome to the best and most trusted car dealer on the internet</h2>
-<p>Explore our wide selection of vehicles and find the perfect one for you.</p>
+<div class="welcome-container">
+    <h2>Welcome to Your Trusted Car Dealer</h2>
+    <p>At our dealership, we pride ourselves on offering a wide selection of vehicles to suit every need and budget. Whether you're looking for a family car, a luxury vehicle, or something sporty, we've got you covered.</p>
+
+    <div class="image-container">
+        <img src="{% static 'images/homecar.jpg' %}" alt="Home Car" class="homecar-image">
+    </div>
+
+    <p>Browse our inventory, take a test drive, and experience the quality and reliability of our vehicles. Our expert team is here to assist you every step of the way, ensuring you find the perfect vehicle that meets your needs and exceeds your expectations.</p>
+
+    <p><strong>Ready to start your journey? Explore our collection now and discover the car of your dreams!</strong></p>
+</div>
 {% endblock %}
