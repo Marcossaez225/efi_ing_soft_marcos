@@ -3,10 +3,10 @@
 import os
 from pathlib import Path
 
-# Construcción de rutas dentro del proyecto
+# Building paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Cargar variables de entorno desde .env
+# Load environment variables from .env file
 def load_env_file():
     env_path = BASE_DIR / '.env'
     if env_path.exists():
@@ -17,15 +17,15 @@ def load_env_file():
                 key, value = line.strip().split('=', 1)
                 os.environ.setdefault(key, value)
 
-# Cargar el archivo .env
+# Load the .env file
 load_env_file()
 
-# Seguridad
+# Security settings
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'default-secret-key-for-development-only')
 DEBUG = True  
-ALLOWED_HOSTS = ['*'] # Añadir dominios o direcciones IP permitidas en producción
+ALLOWED_HOSTS = ['*']  # Add allowed domains or IPs in production
 
-# Aplicaciones instaladas
+# Installed applications
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'comments',
 ]
 
-# Middleware
+# Middleware configuration
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -50,14 +50,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Configuración de URL
+# URL configuration
 ROOT_URLCONF = 'concesionario.urls'
 
-# Configuración de plantillas
+# Template settings
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Carpeta de plantillas global
+        'DIRS': [BASE_DIR / 'templates'],  # Global template folder
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,10 +72,10 @@ TEMPLATES = [
     },
 ]
 
-# Configuración de WSGI
+# WSGI configuration
 WSGI_APPLICATION = 'concesionario.wsgi.application'
 
-# Configuración de la base de datos
+# Database configuration
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -83,7 +83,7 @@ DATABASES = {
     }
 }
 
-# Validación de contraseñas
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -91,26 +91,25 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Configuración de internacionalización
+# Internationalization settings
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Archivos estáticos
+# Static files configuration
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-
-# Media
+# Media files configuration
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Tipo de campo de clave primaria por defecto
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Redirect to the profile login
 LOGIN_REDIRECT_URL = 'profile'
 
-# concesionario/settings.py
+# Logout redirection
 LOGOUT_REDIRECT_URL = 'home'  

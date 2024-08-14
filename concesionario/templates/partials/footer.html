@@ -1,12 +1,15 @@
 <!-- templates/partials/footer.html -->
 <footer>
     <div class="footer-content">
+        <!-- Nombre del concesionario -->
         <p>&copy; {{ dealership_name }}</p>
-        <!-- Solo muestra el contacto, sin el horario de apertura -->
-        <p>Contact: 
+        
+        <!-- Información de contacto cargada dinámicamente -->
+        <p>
+            Contact: 
             <a href="mailto:{{ contact_email }}">{{ contact_email }}</a> | 
             <a href="tel:{{ contact_phone }}">{{ contact_phone }}</a>
-            <p>&copy; 2024 Mi Concesionaria</p>
         </p>
+
     </div>
 </footer>
