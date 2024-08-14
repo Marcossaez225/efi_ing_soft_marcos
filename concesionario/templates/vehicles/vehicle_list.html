@@ -1,32 +1,35 @@
-<!-- templates/vehicles/vehicle_list.html -->
-
 {% extends 'base.html' %}
-{% load static %} 
+{% load static %}
 
 {% block title %}Vehicle List{% endblock %}
 
 {% block content %}
 <h2>Vehicle List</h2>
-<form method="get" class="vehicle-filter-form">
-    {{ form.as_p }} <!-- Esto debería mostrar todos los campos del formulario -->
+
+<form method="get">
+    {{ form.as_p }}
     <button type="submit">Filter</button>
 </form>
 
 <ul class="vehicle-list">
     {% for vehicle in vehicles %}
     <li class="vehicle-item">
-        <a href="{% url 'vehicle_detail' vehicle.id %}">
-            {% if vehicle.image %}
-                <img src="{{ vehicle.image.image.url }}" alt="Cover Image" width="100">
-            {% else %}
-                <img src="{% static 'images/no_image_available.png' %}" alt="No Image" width="100">
-            {% endif %}
-            <h2>{{ vehicle.brand.name }} {{ vehicle.model }} - ${{ vehicle.price_in_usd }}</h2>
-            <p><strong>Year:</strong> {{ vehicle.year_of_manufacture }}</p>
+        <a href="{% url 'vehicle_detail' vehicle.pk %}" class="vehicle-card">
+            <div class="vehicle-image">
+                {% if vehicle.main_image %}
+                    <img src="{{ vehicle.main_image.image.url }}" alt="{{ vehicle.model }}">
+                {% else %}
+                    <img src="{% static 'images/no_image_available.png' %}" alt="No Image Available">
+                {% endif %}
+            </div>
+            <div class="vehicle-details">
+                <h2>{{ vehicle.brand.name }} {{ vehicle.model }}</h2>
+                <p>Price: ${{ vehicle.price_in_usd }}</p>
+                <p>Year of Manufacture: {{ vehicle.year_of_manufacture }}</p> <!-- Línea añadida -->
+            </div>
         </a>
     </li>
-    {% empty %}
-    <li>No vehicles are available at this time.</li>
     {% endfor %}
 </ul>
+
 {% endblock %}

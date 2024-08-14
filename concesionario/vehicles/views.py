@@ -6,7 +6,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from .models import Vehicle, FollowedVehicle
 from media.models import VehicleImage
-from .forms import VehicleForm, VehicleSortFilterForm
+from .forms import VehicleForm, VehicleSortFilterForm, VehicleImageForm
 from comments.forms import CommentForm
 from comments.views import get_ordered_comments
 
@@ -39,16 +39,19 @@ class VehicleListView(ListView):
         context = super().get_context_data(**kwargs)
         context['form'] = VehicleSortFilterForm(self.request.GET or None)
         
-        # Añadir la primera imagen de cada vehículo al contexto
+        # Añadir la imagen principal de cada vehículo al contexto
         vehicles_with_images = []
         for vehicle in context['vehicles']:
-            vehicle.image = vehicle.images.first()  # Obtén la primera imagen como representativa
+            main_image = vehicle.images.filter(is_main=True).first()
+            if not main_image:
+                main_image = vehicle.images.first()  # Si no hay una imagen principal, usar la primera
+            vehicle.main_image = main_image
             vehicles_with_images.append(vehicle)
         context['vehicles'] = vehicles_with_images
         
         return context
 
-class VehicleDetailView(DetailView):
+class VehicleDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Vehicle
     template_name = 'vehicles/vehicle_detail.html'
     context_object_name = 'vehicle'
@@ -56,7 +59,7 @@ class VehicleDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         vehicle = self.get_object()
-        
+
         # Obtener la imagen principal (portada) o la primera imagen disponible
         main_image = vehicle.images.filter(is_main=True).first()
         if not main_image:
@@ -67,11 +70,34 @@ class VehicleDetailView(DetailView):
         context['images'] = vehicle.images.all()
         context['form'] = CommentForm()
 
+        # Formulario de subida de imágenes
+        if self.request.user.is_staff:
+            context['image_form'] = VehicleImageForm()
+
         # Verificar si el usuario sigue el vehículo
         if self.request.user.is_authenticated:
             context['is_followed'] = FollowedVehicle.objects.filter(user=self.request.user, vehicle=vehicle).exists()
 
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()  # Obtén el objeto Vehicle
+        if request.user.is_staff:
+            image_form = VehicleImageForm(request.POST, request.FILES)
+            if image_form.is_valid():
+                vehicle_image = image_form.save(commit=False)
+                vehicle_image.vehicle = self.object  # Asigna el vehículo al que pertenece la imagen
+                vehicle_image.save()  # Guarda la nueva imagen
+                return redirect('vehicle_detail', pk=self.object.pk)
+        return self.get(request, *args, **kwargs)  # Si no es una solicitud POST válida, realiza la solicitud GET habitual
+
+    def test_func(self):
+        # Solo permite a los usuarios staff (administradores) subir imágenes
+        return self.request.user.is_staff
+
+    def handle_no_permission(self):
+        # Redirige a la página de inicio si el usuario no tiene permisos
+        return redirect('home')
 
 class VehicleCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Vehicle

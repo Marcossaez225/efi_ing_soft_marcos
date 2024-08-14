@@ -8,18 +8,16 @@
 {% block content %}
 <h2>{{ vehicle.brand.name }} {{ vehicle.model }} ({{ vehicle.year_of_manufacture }})</h2>
 
-<div style="display: flex;">
-    <!-- Imagen de portada grande -->
-    <div style="flex: 1;">
+<div class="vehicle-display">
+    <div class="main-image-container">
         {% if main_image %}
-            <img id="mainImage" src="{{ main_image.image.url }}" alt="{{ vehicle.model }}" style="max-width: 100%; height: auto;">
+            <img id="mainImage" src="{{ main_image.image.url }}" alt="{{ vehicle.model }}" class="main-image">
         {% else %}
-            <img id="mainImage" src="{% static 'images/no_image_available.png' %}" alt="No Image Available" style="max-width: 100%; height: auto;">
+            <img id="mainImage" src="{% static 'images/no_image_available.png' %}" alt="No Image Available" class="main-image">
         {% endif %}
     </div>
 
-    <!-- Detalles del vehículo -->
-    <div style="flex: 1; padding-left: 20px;">
+    <div class="vehicle-details">
         <p><strong>Price:</strong> ${{ vehicle.price_in_usd }}</p>
         <p><strong>Brand:</strong> {{ vehicle.brand.name }}</p>
         <p><strong>Model:</strong> {{ vehicle.model }}</p>
@@ -31,15 +29,22 @@
     </div>
 </div>
 
-<!-- Galería de fotos pequeñas -->
 <h3>Gallery</h3>
-<div style="display: flex; gap: 10px; overflow-x: auto; padding-top: 20px;">
+<div class="gallery">
     {% for image in images %}
-        <img src="{{ image.image.url }}" alt="{{ vehicle.model }}" style="height: 100px; width: auto; cursor: pointer;" onclick="document.getElementById('mainImage').src='{{ image.image.url }}'">
+        <img src="{{ image.image.url }}" alt="{{ vehicle.model }}" class="gallery-image" onclick="document.getElementById('mainImage').src='{{ image.image.url }}'">
     {% endfor %}
 </div>
 
-<!-- Sección de comentarios -->
+{% if user.is_staff %}
+    <h3>Subir nueva imagen</h3>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ image_form.as_p }}
+        <button type="submit">Subir</button>
+    </form>
+{% endif %}
+
 <h3>Comments</h3>
 {% if user.is_authenticated %}
     <form method="post" action="{% url 'comment_create' vehicle.pk %}">
@@ -59,7 +64,7 @@
         {% if user.is_authenticated %}
             {% if user == comment.user or user.is_staff %}
                 <a href="{% url 'comment_update' comment.pk %}">Edit</a>
-                <form method="post" action="{% url 'comment_delete' comment.pk %}" style="display: inline;">
+                <form method="post" action="{% url 'comment_delete' comment.pk %}" class="inline-form">
                     {% csrf_token %}
                     <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este comentario?');">Delete</button>
                 </form>

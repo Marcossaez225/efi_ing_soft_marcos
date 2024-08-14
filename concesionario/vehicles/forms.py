@@ -2,6 +2,7 @@
 
 from django import forms
 from .models import Vehicle, Brand
+from media.models import VehicleImage  # Importa el modelo de imágenes
 
 class VehicleForm(forms.ModelForm):
     class Meta:
@@ -31,3 +32,9 @@ class VehicleSortFilterForm(forms.Form):
         self.fields['brand'].choices += [(brand.id, brand.name) for brand in Brand.objects.all()]
         # Obtener opciones de tipo de combustible
         self.fields['fuel_type'].choices += [(ft, ft) for ft in Vehicle.objects.values_list('fuel_type', flat=True).distinct()]
+
+# Formulario para la subida de imágenes
+class VehicleImageForm(forms.ModelForm):
+    class Meta:
+        model = VehicleImage
+        fields = ['image']
