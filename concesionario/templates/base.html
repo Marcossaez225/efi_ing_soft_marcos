@@ -5,10 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
-    <title>{% block title %}Mi Concesionaria{% endblock %}</title>
+    <title>{% block title %}{% if block.super %}{{ block.super }} - {% endif %}Didieronga Dealership{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <!-- Verificando que se carga base.html -->
-    <script>console.log('Base template loaded');</script>
 </head>
 <body>
     {% include 'partials/header.html' %}

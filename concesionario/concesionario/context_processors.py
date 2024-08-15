@@ -1,8 +1,8 @@
 def dealership_info(request):
     """Proporciona información general del concesionario."""
     return {
-        'dealership_name': 'Didier Car Dealer',
+        'dealership_name': 'Didier Car Dealership',
         'opening_hours': 'Mon-Fri 9am-6pm',
         'contact_email': 'contact@concesionario.com',
-        'contact_phone': '+1-800-555-1234',
+        'contact_phone': '+54-0358-462-5361',
     }

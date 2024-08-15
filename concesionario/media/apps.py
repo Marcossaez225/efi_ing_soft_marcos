@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ServicesConfig(AppConfig):
+class MediaConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'services'
+    name = 'media'

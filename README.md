@@ -9,14 +9,16 @@ Welcome to the **Concesionario Django Project**! This web application, developed
 - Features
 - Installation
 - Usage
-- Project Structure
 - Configuration
-- Technical Details
-- Disclaimer
 - Credits
-- License
 
-## Key Features
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Credits](#credits)
+
+## Features
 
 - **App Structure**: The project is organized into four main Django apps: `Vehicles`, `Comments`, `Users`, and `Media`, each handling different aspects of the application.
 - **No JavaScript**: The project is built purely using Django's Model-Template-View architecture with Python and HTML, without any JavaScript.
@@ -67,7 +69,7 @@ Before you begin, ensure you have met the following requirements:
 4. **Run the Development Server**
 
     ```bash
-    python manage.py runserver
+    python3 concesionario/manage.py runserver
     ```
 
 The project will be available at `http://127.0.0.1:8000`.
@@ -80,9 +82,6 @@ The project will be available at `http://127.0.0.1:8000`.
 - **Admin Panel**: Access the admin panel at `http://127.0.0.1:8000/admin/` using the superuser credentials. From here, you can manage vehicles, images, comments, and user roles with full control.
 - **Vehicle Listings**: Explore the comprehensive list of vehicles by visiting the cars section at `http://127.0.0.1:8000/vehicles/`. Users can filter vehicles by various criteria, view detailed information, and interact with features like commenting and following vehicles.
 - **User Profile**: After logging in, users can access their profile at `http://127.0.0.1:8000/profile/` to manage their followed vehicles, edit their comments, and update their account details.
-
-## Configuration
-
 
 
 ## Credits
