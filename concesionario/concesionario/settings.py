@@ -34,9 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'vehicles',
-    'media',
     'users',
-    'comments',
 ]
 
 # Middleware configuration

@@ -1,9 +1,7 @@
-# vehicles/forms.py
-
 from django import forms
-from .models import Vehicle, Brand
-from media.models import VehicleImage  # Importa el modelo de imágenes
+from .models import Vehicle, Brand, VehicleImage, Comment
 
+# Formulario para crear y actualizar un vehículo
 class VehicleForm(forms.ModelForm):
     class Meta:
         model = Vehicle
@@ -12,6 +10,7 @@ class VehicleForm(forms.ModelForm):
             'engine_displacement', 'fuel_type', 'country_of_manufacture', 'price_in_usd'
         ]
 
+# Formulario para ordenar y filtrar vehículos en la lista
 class VehicleSortFilterForm(forms.Form):
     SORT_CHOICES = [
         ('brand', 'Brand'),
@@ -28,12 +27,31 @@ class VehicleSortFilterForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Obtener opciones de marca mostrando los nombres
         self.fields['brand'].choices += [(brand.id, brand.name) for brand in Brand.objects.all()]
-        # Obtener opciones de tipo de combustible
         self.fields['fuel_type'].choices += [(ft, ft) for ft in Vehicle.objects.values_list('fuel_type', flat=True).distinct()]
 
-# Formulario para la subida de imágenes
+# Formulario para subir imágenes de vehículos
+class VehicleImageUploadForm(forms.ModelForm):
+    class Meta:
+        model = VehicleImage
+        fields = ['image']
+
+    def save_image(self, vehicle):
+        image = self.cleaned_data.get('image')
+        if hasattr(vehicle, 'image'):
+            vehicle_image = vehicle.image
+            vehicle_image.image = image
+            vehicle_image.save()
+        else:
+            VehicleImage.objects.create(vehicle=vehicle, image=image)
+
+# Formulario para agregar y editar comentarios
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
+
+# Formulario de imagen para asignar a los vehículos en su detalle
 class VehicleImageForm(forms.ModelForm):
     class Meta:
         model = VehicleImage

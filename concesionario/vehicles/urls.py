@@ -1,5 +1,3 @@
-# vehicles/urls.py
-
 from django.urls import path
 from .views import (
     VehicleListView,
@@ -7,8 +5,11 @@ from .views import (
     VehicleCreateView,
     VehicleUpdateView,
     follow_vehicle,
-    unfollow_vehicle
-    # Elimina CarListView si no es necesario
+    unfollow_vehicle,
+    CommentCreateView,
+    CommentUpdateView,
+    CommentDeleteView,
+    ImageUploadView
 )
 
 urlpatterns = [
@@ -30,4 +31,15 @@ urlpatterns = [
     # Dejar de seguir un vehículo
     path('<int:vehicle_id>/unfollow/', unfollow_vehicle, name='unfollow_vehicle'),
 
+    # Crear un comentario
+    path('comments/create/<int:vehicle_id>/', CommentCreateView.as_view(), name='comment_create'),
+
+    # Actualizar un comentario existente
+    path('comments/update/<int:pk>/', CommentUpdateView.as_view(), name='comment_update'),
+
+    # Eliminar un comentario
+    path('comments/delete/<int:pk>/', CommentDeleteView.as_view(), name='comment_delete'),
+
+    # Subir una imagen para un vehículo
+    path('images/<int:vehicle_id>/upload/', ImageUploadView.as_view(), name='image_upload'),
 ]

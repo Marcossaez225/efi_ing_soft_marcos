@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import datetime
+import os
+from uuid import uuid4
 
 class Brand(models.Model):
     """Modelo que representa una marca de vehículo."""
@@ -84,3 +86,29 @@ class FollowedVehicle(models.Model):
 
     def __str__(self):
         return f"{self.user.username} follows {self.vehicle}"
+
+# Modelo Comment que integraba anteriormente en la app comments
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    vehicle = models.ForeignKey(Vehicle, related_name='comments', on_delete=models.CASCADE)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.text[:50]  # Muestra solo los primeros 50 caracteres del comentario
+
+# Función de ruta para almacenamiento único de imágenes
+def get_file_path(instance, filename):
+    extension = os.path.splitext(filename)[1]
+    new_filename = f"{uuid4().hex}{extension}"
+    return os.path.join(f'images/uploads/{instance.vehicle.id}/', new_filename)
+
+# Modelo VehicleImage que integraba anteriormente en la app media
+class VehicleImage(models.Model):
+    vehicle = models.ForeignKey(Vehicle, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=get_file_path)
+    is_main = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Image for {self.vehicle.model}"
