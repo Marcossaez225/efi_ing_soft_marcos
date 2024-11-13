@@ -18,13 +18,53 @@ class VehicleListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         
+        # Aplica filtros y ordenamiento
+        form = VehicleSortFilterForm(self.request.GET or None)
+        if form.is_valid():
+            # Ordenar por la opción seleccionada en el formulario
+            sort_by = form.cleaned_data.get('sort_by')
+            if sort_by:
+                queryset = queryset.order_by(sort_by)
+            
+            # Filtrar por rango de precios
+            min_price = form.cleaned_data.get('min_price')
+            if min_price is not None:
+                queryset = queryset.filter(price_in_usd__gte=min_price)
+                
+            max_price = form.cleaned_data.get('max_price')
+            if max_price is not None:
+                queryset = queryset.filter(price_in_usd__lte=max_price)
+                
+            # Filtrar por rango de años
+            min_year = form.cleaned_data.get('min_year')
+            if min_year is not None:
+                queryset = queryset.filter(year_of_manufacture__gte=min_year)
+                
+            max_year = form.cleaned_data.get('max_year')
+            if max_year is not None:
+                queryset = queryset.filter(year_of_manufacture__lte=max_year)
+                
+            # Filtrar por marca y tipo de combustible
+            brand = form.cleaned_data.get('brand')
+            if brand:
+                queryset = queryset.filter(brand__id=brand)
+                
+            fuel_type = form.cleaned_data.get('fuel_type')
+            if fuel_type:
+                queryset = queryset.filter(fuel_type=fuel_type)
+        
         # Añade la imagen principal a cada vehículo en el queryset
         for vehicle in queryset:
-            main_image = vehicle.images.filter(is_main=True).first()
-            if not main_image:
-                main_image = vehicle.images.first()  # Si no hay imagen principal, usa la primera
+            main_image = vehicle.images.filter(is_main=True).first() or vehicle.images.first()
             vehicle.main_image = main_image
+
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = VehicleSortFilterForm(self.request.GET or None)
+        return context
+
 
 # Vista de detalles de un vehículo
 class VehicleDetailView(DetailView):
