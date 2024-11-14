@@ -31,6 +31,19 @@ class VehicleSerializer(serializers.ModelSerializer):
             'price_in_usd', 'images', 'comments'
         ]
 
+class VehicleSummarySerializer(serializers.ModelSerializer):
+    brand = serializers.CharField(source='brand.name', read_only=True)
+    country_of_manufacture = serializers.CharField(source='country_of_manufacture.name', read_only=True) 
+
+    class Meta:
+        model = Vehicle
+        fields = [
+            'id', 'brand', 'model', 'year_of_manufacture',
+            'engine_displacement', 'fuel_type', 'price_in_usd',
+            'country_of_manufacture'
+        ]
+
+
 class FollowedVehicleSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
     vehicle = VehicleSerializer(read_only=True)
@@ -44,7 +57,8 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ['id', 'user', 'vehicle', 'text', 'created_at', 'updated_at']
+        fields = ['id', 'user', 'text', 'created_at', 'updated_at']
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -56,3 +70,4 @@ class ClientSerializer(serializers.ModelSerializer):
         model = Client
         fields = '__all__'
         read_only_fields = ['created_at', 'updated_at']
+

@@ -123,12 +123,19 @@ class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = CommentForm
     template_name = 'vehicles/comment_form.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context['vehicle'] = self.get_object().vehicle
+        return context
+
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.user or self.request.user.is_staff
 
     def get_success_url(self):
         return reverse_lazy('vehicle_detail', kwargs={'pk': self.object.vehicle.pk})
+
 
 class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment

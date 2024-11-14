@@ -26,17 +26,12 @@
         <p><strong>Year of Manufacture:</strong> {{ vehicle.year_of_manufacture }}</p>
 
         {% if user.is_authenticated %}
-            {% if is_followed %}
-                <form method="post" action="{% url 'unfollow_vehicle' vehicle.pk %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Unfollow</button>
-                </form>
-            {% else %}
-                <form method="post" action="{% url 'follow_vehicle' vehicle.pk %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">Follow</button>
-                </form>
-            {% endif %}
+            <form method="post" action="{% url is_followed|yesno:'unfollow_vehicle,follow_vehicle' vehicle.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn {% if is_followed %}btn-danger{% else %}btn-primary{% endif %}">
+                    {% if is_followed %}Unfollow{% else %}Follow{% endif %}
+                </button>
+            </form>
         {% else %}
             <p><a href="{% url 'login' %}">Login</a> to follow this vehicle.</p>
         {% endif %}
@@ -70,24 +65,23 @@
     <p>You need to be logged in to add comments.</p>
 {% endif %}
 
-<ul>
+<ul class="comments-list">
     {% for comment in comments %}
-    <li>
-        <p><strong>{{ comment.user.username }}</strong> ({{ comment.created_at }}):</p>
-        <p>{{ comment.text }}</p>
-        {% if user.is_authenticated %}
-            {% if user == comment.user or user.is_staff %}
-                <a href="{% url 'comment_update' comment.pk %}">Edit</a>
-                <form method="post" action="{% url 'comment_delete' comment.pk %}" class="inline-form">
-                    {% csrf_token %}
-                    <button type="submit" onclick="return confirm('Delete this message?');">Delete</button>
-                </form>
+        <li>
+            <p><strong>{{ comment.user.username }}</strong> <small>({{ comment.created_at|date:"Y-m-d H:i" }})</small>:</p>
+            <p>{{ comment.text }}</p>
+            {% if user.is_authenticated %}
+                {% if user == comment.user or user.is_staff %}
+                    <a href="{% url 'comment_update' comment.pk %}">Edit</a>
+                    <form method="post" action="{% url 'comment_delete' comment.pk %}" class="inline-form">
+                        {% csrf_token %}
+                        <button type="submit" onclick="return confirm('Delete this comment?');">Delete</button>
+                    </form>
+                {% endif %}
             {% endif %}
-        {% endif %}
-    </li>
+        </li>
     {% empty %}
-    <li>No comments yet.</li>
+        <li>No comments yet.</li>
     {% endfor %}
 </ul>
-
 {% endblock %}
