@@ -25,17 +25,33 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'default-secret-key-for-develop
 DEBUG = True  
 ALLOWED_HOSTS = ['*']  # Add allowed domains or IPs in production
 
-# Installed applications
+# Core Django applications
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'vehicles',
-    'users',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
 ]
+
+# External libraries and frameworks
+EXTERNAL_APPS = [
+    'rest_framework',  # Django REST framework for API
+    'django_filters',  # Django filters for API filtering
+    'drf_yasg', # Swagger generator
+]
+
+# Custom applications
+SELF_APPS = [
+    "vehicles",
+    "users",
+    "api", 
+]
+
+# Combine all applications
+INSTALLED_APPS = INSTALLED_APPS + EXTERNAL_APPS + SELF_APPS
+
 
 # Middleware configuration
 MIDDLEWARE = [
