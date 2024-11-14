@@ -86,6 +86,45 @@ The project will be available at `http://127.0.0.1:8000`.
 
     From here, you can interact with your Django models and perform database queries directly.
 
+## API Documentation
+
+This project includes a RESTful API that allows external applications to access and manage dealership data, including vehicles, users, comments, and more. The API is documented with Swagger, which provides an interactive UI to explore and test each endpoint.
+
+### Accessing the API
+
+- **API Root**: The API is accessible at `http://127.0.0.1:8000/api/`.
+- **Authentication**: Most endpoints require authentication via token. To obtain a token, use the `/token-auth/` endpoint and include it in the headers for authenticated requests.
+- **Swagger Documentation**: The full API documentation is available at `http://127.0.0.1:8000/swagger/`. Swagger offers a UI to test each endpoint, view input/output details, and explore parameter options.
+
+### Key API Endpoints
+
+| Endpoint                       | Method | Description                                        |
+|--------------------------------|--------|----------------------------------------------------|
+| `/api/brands/`                 | GET    | Retrieve a list of all vehicle brands.             |
+| `/api/vehicles/`               | GET    | Retrieve a list of vehicles with filtering options.|
+| `/api/users/`                  | GET    | Retrieve a list of users (admin access required).  |
+| `/api/vehicles/<id>/comments/` | GET    | Retrieve comments for a specific vehicle.          |
+| `/api/clients/create/`         | POST   | Create a new client (admin access required).       |
+| `/api/clients/`                | GET    | Retrieve a list of clients (admin access required).|
+| `/api/token-auth/`             | POST   | Obtain an authentication token for API requests.   |
+
+### Example: Using the API with Postman
+
+1. **Authenticate**: Use the `/api/token-auth/` endpoint to obtain a token. Send a POST request with your username and password in the body.
+2. **Set the Token**: Copy the token from the response, then include it in the Authorization header for subsequent requests: `Authorization: Token <your_token>`.
+3. **Explore Endpoints**: Use Postman or Swagger to interact with the various endpoints, making sure to include the token for endpoints that require authentication.
+
+### Available API Functionality
+
+The API offers several features for managing dealership data:
+- **Vehicle Listings**: Retrieve and filter vehicle listings with details such as brand, model, year, and more.
+- **Commenting**: Access comments on specific vehicles and manage comments (with admin privileges).
+- **Client Management**: Admin users can create and list clients for the dealership.
+- **User Profiles**: Retrieve user profile information (admin access required).
+
+For complete endpoint documentation, including parameters and example responses, refer to the **Swagger documentation** at `http://127.0.0.1:8000/swagger/`.
+
+
 
 ## Credits
 
