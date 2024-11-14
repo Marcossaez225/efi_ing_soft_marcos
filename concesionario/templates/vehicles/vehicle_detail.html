@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}{{ vehicle.brand.name }} {{ vehicle.model }}{% endblock %}
 
@@ -11,34 +12,34 @@
         {% if main_image %}
             <img id="mainImage" src="{{ main_image.image.url }}" alt="{{ vehicle.model }}" class="main-image">
         {% else %}
-            <img id="mainImage" src="{% static 'images/no_image_available.png' %}" alt="No Image Available" class="main-image">
+            <img id="mainImage" src="{% static 'images/no_image_available.png' %}" alt="{% trans 'No Image Available' %}" class="main-image">
         {% endif %}
     </div>
 
     <div class="vehicle-details">
-        <p><strong>Price:</strong> ${{ vehicle.price_in_usd }}</p>
-        <p><strong>Brand:</strong> {{ vehicle.brand.name }}</p>
-        <p><strong>Model:</strong> {{ vehicle.model }}</p>
-        <p><strong>Country of Manufacture:</strong> {{ vehicle.country_of_manufacture }}</p>
-        <p><strong>Engine Displacement:</strong> {{ vehicle.engine_displacement }}</p>
-        <p><strong>Fuel Type:</strong> {{ vehicle.fuel_type }}</p>
-        <p><strong>Number of Doors:</strong> {{ vehicle.number_of_doors }}</p>
-        <p><strong>Year of Manufacture:</strong> {{ vehicle.year_of_manufacture }}</p>
+        <p><strong>{% trans "Price" %}:</strong> ${{ vehicle.price_in_usd }}</p>
+        <p><strong>{% trans "Brand" %}:</strong> {{ vehicle.brand.name }}</p>
+        <p><strong>{% trans "Model" %}:</strong> {{ vehicle.model }}</p>
+        <p><strong>{% trans "Country of Manufacture" %}:</strong> {{ vehicle.country_of_manufacture }}</p>
+        <p><strong>{% trans "Engine Displacement" %}:</strong> {{ vehicle.engine_displacement }}</p>
+        <p><strong>{% trans "Fuel Type" %}:</strong> {{ vehicle.fuel_type }}</p>
+        <p><strong>{% trans "Number of Doors" %}:</strong> {{ vehicle.number_of_doors }}</p>
+        <p><strong>{% trans "Year of Manufacture" %}:</strong> {{ vehicle.year_of_manufacture }}</p>
 
         {% if user.is_authenticated %}
             <form method="post" action="{% url is_followed|yesno:'unfollow_vehicle,follow_vehicle' vehicle.pk %}">
                 {% csrf_token %}
                 <button type="submit" class="btn {% if is_followed %}btn-danger{% else %}btn-primary{% endif %}">
-                    {% if is_followed %}Unfollow{% else %}Follow{% endif %}
+                    {% if is_followed %}{% trans "Unfollow" %}{% else %}{% trans "Follow" %}{% endif %}
                 </button>
             </form>
         {% else %}
-            <p><a href="{% url 'login' %}">Login</a> to follow this vehicle.</p>
+            <p><a href="{% url 'login' %}">{% trans "Login" %}</a> {% trans "to follow this vehicle." %}</p>
         {% endif %}
     </div>
 </div>
 
-<h3>Gallery</h3>
+<h3>{% trans "Gallery" %}</h3>
 <div class="gallery">
     {% for image in images %}
         <img src="{{ image.image.url }}" alt="{{ vehicle.model }}" class="gallery-image" onclick="document.getElementById('mainImage').src='{{ image.image.url }}'">
@@ -46,24 +47,28 @@
 </div>
 
 {% if user.is_staff %}
-    <h3>Upload a new image</h3>
+    <h3>{% trans "Upload a new image" %}</h3>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ image_form.as_p }}
-        <button type="submit">Upload</button>
+        <button type="submit">{% trans "Upload" %}</button>
     </form>
 {% endif %}
 
-<h3>Comments</h3>
+<h3>{% trans "Comments" %}</h3>
 {% if user.is_authenticated %}
     <form method="post" action="{% url 'comment_create' vehicle.pk %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Add Comment</button>
+        <button type="submit">{% trans "Add Comment" %}</button>
     </form>
 {% else %}
-    <p>You need to be logged in to add comments.</p>
+    <p>{% trans "You need to be logged in to add comments." %}</p>
 {% endif %}
+
+<script>
+    const deleteConfirmationMessage = "{% trans 'Delete this comment?' %}";
+</script>
 
 <ul class="comments-list">
     {% for comment in comments %}
@@ -72,16 +77,16 @@
             <p>{{ comment.text }}</p>
             {% if user.is_authenticated %}
                 {% if user == comment.user or user.is_staff %}
-                    <a href="{% url 'comment_update' comment.pk %}">Edit</a>
+                    <a href="{% url 'comment_update' comment.pk %}">{% trans "Edit" %}</a>
                     <form method="post" action="{% url 'comment_delete' comment.pk %}" class="inline-form">
                         {% csrf_token %}
-                        <button type="submit" onclick="return confirm('Delete this comment?');">Delete</button>
+                        <button type="submit" onclick="return confirm(deleteConfirmationMessage);">{% trans "Delete" %}</button>
                     </form>
                 {% endif %}
             {% endif %}
         </li>
     {% empty %}
-        <li>No comments yet.</li>
+        <li>{% trans "No comments yet." %}</li>
     {% endfor %}
 </ul>
 {% endblock %}

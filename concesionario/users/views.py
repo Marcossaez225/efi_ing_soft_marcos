@@ -1,4 +1,5 @@
 from django.contrib.auth.views import LoginView, LogoutView
+from django.views import View
 from django.views.generic import CreateView, TemplateView
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -6,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.apps import apps
+from django.utils import translation
 from .forms import UserRegistrationForm, UserLoginForm
 
 # Access the FollowedVehicle model using apps.get_model
@@ -28,10 +30,6 @@ class UserLoginView(LoginView):
     form_class = UserLoginForm
     template_name = 'users/login.html'
 
-    def form_valid(self, form):
-        # Display a success message on successful login
-        messages.success(self.request, "You have successfully logged in.")
-        return super().form_valid(form)
 
 # View for user logout
 class UserLogoutView(LoginRequiredMixin, LogoutView):
@@ -52,6 +50,18 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         # Retrieve vehicles followed by the authenticated user
         context['followed_vehicles'] = FollowedVehicle.objects.filter(user=self.request.user).select_related('vehicle')
         return context
+
+class UpdateLang(View):
+    def get(self, request):
+        # Alternar idioma entre 'es' y 'en'
+        current_lang = request.LANGUAGE_CODE
+        new_lang = 'es' if current_lang == 'en' else 'en'
+
+        # Almacena la preferencia en la sesión del usuario
+        translation.activate(new_lang)
+        request.session[translation.LANGUAGE_SESSION_KEY] = new_lang
+
+        return redirect(request.META.get('HTTP_REFERER', 'home'))
 
 @login_required
 def unfollow_vehicle_from_profile(request, vehicle_id):

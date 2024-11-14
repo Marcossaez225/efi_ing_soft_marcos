@@ -1,18 +1,16 @@
+from django.conf.urls.i18n import i18n_patterns
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from .views import HomePageView
-
-# Importaciones para drf_yasg
-from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from rest_framework import permissions
 
-# Configuración de drf_yasg para la documentación de la API
 schema_view = get_schema_view(
     openapi.Info(
-        title="Concesionaria API",
+        title="Concesionario API",
         default_version='v1',
         description="Documentación de la API para el proyecto de concesionaria",
     ),
@@ -20,15 +18,21 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
+# URLs sin soporte de internacionalización para la API
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),  # Incluye todas las rutas de la API bajo 'api/'
-    path('vehicles/', include('vehicles.urls')),  # Incluye las rutas de 'vehicles' sin prefijo 'api/'
-    path('users/', include('users.urls')),  # Incluye las rutas de 'users' para manejar el perfil y autenticación
-    path('', HomePageView.as_view(), name='home'),
-    # URL para Swagger UI
+    path('api/', include('api.urls')),  # Coloca la API fuera de i18n_patterns
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('doc/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-doc'),  # URL adicional para Swagger
+    path('i18n/', include('django.conf.urls.i18n')),  # Soporte para selector de idioma
 ]
+
+# URLs con soporte de internacionalización para el resto del sitio
+urlpatterns += i18n_patterns(
+    path('vehicles/', include('vehicles.urls')),
+    path('users/', include('users.urls')),
+    path('', HomePageView.as_view(), name='home'),
+)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

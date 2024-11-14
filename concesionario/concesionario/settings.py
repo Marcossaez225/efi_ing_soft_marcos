@@ -2,6 +2,7 @@
 
 import os
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 
 # Building paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +41,7 @@ EXTERNAL_APPS = [
     'rest_framework',  # Django REST framework for API
     'rest_framework.authtoken',
     'django_filters',  # Django filters for API filtering
-    'drf_yasg', # Swagger generator
+    'drf_yasg',  # Swagger generator
 ]
 
 # Custom applications
@@ -53,16 +54,16 @@ SELF_APPS = [
 # Combine all applications
 INSTALLED_APPS = INSTALLED_APPS + EXTERNAL_APPS + SELF_APPS
 
-
 # Middleware configuration
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # Added for internationalization
 ]
 
 # URL configuration
@@ -82,6 +83,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'concesionario.context_processors.dealership_info',
                 'users.context_processors.user_status',
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -107,10 +109,20 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization settings
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'  # Default language
+
+LANGUAGES = (
+    ('en', _('English')),
+    ('es', _('Español')),
+)
+
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 
 # Static files configuration
 STATIC_URL = '/static/'
@@ -133,8 +145,5 @@ LOGOUT_REDIRECT_URL = 'home'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
     ],
 }

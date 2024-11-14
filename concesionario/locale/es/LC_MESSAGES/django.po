@@ -1,0 +1,275 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# DIDIER OLIVA <DI.OLIVA@ITECRIOCUARTO.ORG.AR>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-14 17:19-0300\n"
+"PO-Revision-Date: 2024-11-14 09:30+0000\n"
+"Last-Translator: DIDIER OLIVA <DI.OLIVA@ITECRIOCUARTO.ORG.AR>\n"
+"Language-Team: Spanish <Oliva.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: concesionario/settings.py:115
+msgid "English"
+msgstr "Inglés"
+
+#: concesionario/settings.py:116
+msgid "Español"
+msgstr "Español"
+
+#: templates/index.html:10
+msgid "Welcome to Didier's Car Dealership"
+msgstr "Bienvenido a la Concesionaria de Autos de Didier"
+
+#: templates/index.html:11
+msgid ""
+"At our dealership, we offer a curated selection of vehicles that cater to "
+"various needs and budgets. Whether you're looking for a family car, a luxury "
+"vehicle, or something sporty, you'll find it here."
+msgstr ""
+"En nuestra concesionaria, ofrecemos una selección de vehículos "
+"cuidadosamente seleccionados que se adaptan a diversas necesidades y "
+"presupuestos. Ya sea que busques un auto familiar, un vehículo de lujo o "
+"algo deportivo, lo encontrarás aquí."
+
+#: templates/index.html:17
+msgid ""
+"Our platform allows you to follow your favorite vehicles, keeping you "
+"updated on any changes or offers. Additionally, you can leave comments and "
+"ask questions directly on each vehicle's page, making it easy to get all the "
+"information you need before making a decision."
+msgstr ""
+"Nuestra plataforma te permite seguir tus vehículos favoritos, manteniéndote "
+"actualizado sobre cualquier cambio u oferta. Además, puedes dejar "
+"comentarios y hacer preguntas directamente en la página de cada vehículo, "
+"facilitándote toda la información que necesitas antes de tomar una decisión."
+
+#: templates/index.html:19
+msgid ""
+"Trust in the experience of Didier Oliva – a recognized and reliable name in "
+"the car dealership industry. Start exploring our collection today and find "
+"your next car with confidence."
+msgstr ""
+"Confía en la experiencia de Didier Oliva: un nombre reconocido y confiable "
+"en la industria de concesionarias de autos. Empieza a explorar nuestra "
+"colección hoy y encuentra tu próximo auto con confianza."
+
+#: templates/partials/header.html:6
+msgid "Home"
+msgstr "Inicio"
+
+#: templates/partials/header.html:7
+msgid "Cars"
+msgstr "Autos"
+
+#: templates/partials/header.html:9
+msgid "Profile"
+msgstr "Perfil"
+
+#: templates/partials/header.html:11
+msgid "Admin"
+msgstr "Administración"
+
+#: templates/partials/header.html:16
+msgid "Logout"
+msgstr "Cerrar sesión"
+
+#: templates/partials/header.html:20 templates/vehicles/vehicle_detail.html:37
+msgid "Login"
+msgstr "Iniciar sesión"
+
+#: templates/partials/header.html:21
+msgid "Register"
+msgstr "Registrarse"
+
+#: templates/users/profile.html:5
+msgid "User Profile"
+msgstr "Perfil de Usuario"
+
+#: templates/users/profile.html:8
+msgid "My Profile"
+msgstr "Mi Perfil"
+
+#: templates/users/profile.html:11
+msgid "Welcome"
+msgstr "Bienvenido"
+
+#: templates/users/profile.html:12
+msgid "Email"
+msgstr "Correo Electrónico"
+
+#: templates/users/profile.html:14
+#, fuzzy
+#| msgid "You are not following any vehicles."
+msgid "You are not logged in."
+msgstr "No estás siguiendo ningún vehículo."
+
+#: templates/users/profile.html:17
+msgid "Followed Vehicles"
+msgstr "Vehículos Seguidos"
+
+#: templates/users/profile.html:25 templates/vehicles/vehicle_detail.html:15
+#: templates/vehicles/vehicle_list.html:23
+msgid "No Image Available"
+msgstr "Imagen No Disponible"
+
+#: templates/users/profile.html:37
+msgid "You are not following any vehicles."
+msgstr "No estás siguiendo ningún vehículo."
+
+#: templates/vehicles/vehicle_detail.html:20
+#: templates/vehicles/vehicle_list.html:28 vehicles/forms.py:28
+msgid "Price"
+msgstr "Precio"
+
+#: templates/vehicles/vehicle_detail.html:21 vehicles/forms.py:14
+#: vehicles/forms.py:27 vehicles/forms.py:36
+msgid "Brand"
+msgstr "Marca"
+
+#: templates/vehicles/vehicle_detail.html:22 vehicles/forms.py:15
+msgid "Model"
+msgstr "Modelo"
+
+#: templates/vehicles/vehicle_detail.html:23 vehicles/forms.py:20
+msgid "Country of Manufacture"
+msgstr "País de Fabricación"
+
+#: templates/vehicles/vehicle_detail.html:24 vehicles/forms.py:18
+msgid "Engine Displacement"
+msgstr "Cilindraje del Motor"
+
+#: templates/vehicles/vehicle_detail.html:25 vehicles/forms.py:19
+#: vehicles/forms.py:37
+msgid "Fuel Type"
+msgstr "Tipo de Combustible"
+
+#: templates/vehicles/vehicle_detail.html:26 vehicles/forms.py:17
+msgid "Number of Doors"
+msgstr "Número de Puertas"
+
+#: templates/vehicles/vehicle_detail.html:27
+#: templates/vehicles/vehicle_list.html:29 vehicles/forms.py:16
+msgid "Year of Manufacture"
+msgstr "Año de Fabricación"
+
+#: templates/vehicles/vehicle_detail.html:33
+msgid "Unfollow"
+msgstr "Dejar de seguir"
+
+#: templates/vehicles/vehicle_detail.html:33
+msgid "Follow"
+msgstr "Seguir"
+
+#: templates/vehicles/vehicle_detail.html:37
+msgid "to follow this vehicle."
+msgstr "para seguir este vehículo."
+
+#: templates/vehicles/vehicle_detail.html:42
+msgid "Gallery"
+msgstr "Galería"
+
+#: templates/vehicles/vehicle_detail.html:50
+msgid "Upload a new image"
+msgstr "Subir una nueva imagen"
+
+#: templates/vehicles/vehicle_detail.html:54
+msgid "Upload"
+msgstr "Subir"
+
+#: templates/vehicles/vehicle_detail.html:58
+msgid "Comments"
+msgstr "Comentarios"
+
+#: templates/vehicles/vehicle_detail.html:63
+msgid "Add Comment"
+msgstr "Agregar comentario"
+
+#: templates/vehicles/vehicle_detail.html:66
+msgid "You need to be logged in to add comments."
+msgstr "Necesitas estar registrado para agregar comentarios."
+
+#: templates/vehicles/vehicle_detail.html:70
+msgid "Delete this comment?"
+msgstr "¿Eliminar este comentario?"
+
+#: templates/vehicles/vehicle_detail.html:80
+msgid "Edit"
+msgstr "Editar"
+
+#: templates/vehicles/vehicle_detail.html:83
+msgid "Delete"
+msgstr "Eliminar"
+
+#: templates/vehicles/vehicle_detail.html:89
+msgid "No comments yet."
+msgstr "Aún no hay comentarios."
+
+#: templates/vehicles/vehicle_list.html:5
+#: templates/vehicles/vehicle_list.html:8
+msgid "Vehicle List"
+msgstr "Lista de Vehículos"
+
+#: templates/vehicles/vehicle_list.html:12
+msgid "Filter"
+msgstr "Filtrar"
+
+#: vehicles/forms.py:21
+#, fuzzy
+#| msgid "Price"
+msgid "Price (USD)"
+msgstr "Precio"
+
+#: vehicles/forms.py:29
+msgid "Year"
+msgstr "Año"
+
+#: vehicles/forms.py:31
+msgid "Sort By"
+msgstr "Ordenar por"
+
+#: vehicles/forms.py:32
+#, fuzzy
+#| msgid "Price"
+msgid "Min Price"
+msgstr "Precio"
+
+#: vehicles/forms.py:33
+#, fuzzy
+#| msgid "Price"
+msgid "Max Price"
+msgstr "Precio"
+
+#: vehicles/forms.py:34
+msgid "Min Year"
+msgstr "Año Mínimo"
+
+#: vehicles/forms.py:35
+msgid "Max Year"
+msgstr "Año Máximo"
+
+#: vehicles/forms.py:36 vehicles/forms.py:37
+msgid "All"
+msgstr "Todos"
+
+#: vehicles/forms.py:50 vehicles/forms.py:77
+msgid "Image"
+msgstr "Imagen"
+
+#: vehicles/forms.py:68
+#, fuzzy
+#| msgid "Comments"
+msgid "Comment"
+msgstr "Comentarios"
+
+#, python-format
+#~ msgid "Welcome, %(user.username)s!"
+#~ msgstr "¡Bienvenido, %(user.username)s!"

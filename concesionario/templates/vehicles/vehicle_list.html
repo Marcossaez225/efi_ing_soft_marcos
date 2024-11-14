@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %} 
 
-{% block title %}Vehicle List{% endblock %}
+{% block title %}{% trans "Vehicle List" %}{% endblock %}
 
 {% block content %}
-<h2>Vehicle List</h2>
+<h2>{% trans "Vehicle List" %}</h2>
 
 <form method="get">
     {{ form.as_p }}
-    <button type="submit">Filter</button>
+    <button type="submit">{% trans "Filter" %}</button>
 </form>
 
 <ul class="vehicle-list">
@@ -19,13 +20,13 @@
                 {% if vehicle.main_image %}
                     <img src="{{ vehicle.main_image.image.url }}" alt="{{ vehicle.model }}">
                 {% else %}
-                    <img src="{% static 'images/no_image_available.png' %}" alt="No Image Available">
+                    <img src="{% static 'images/no_image_available.png' %}" alt="{% trans "No Image Available" %}">
                 {% endif %}
             </div>
             <div class="vehicle-details">
                 <h2>{{ vehicle.brand.name }} {{ vehicle.model }}</h2>
-                <p>Price: ${{ vehicle.price_in_usd }}</p>
-                <p>Year of Manufacture: {{ vehicle.year_of_manufacture }}</p>
+                <p>{% trans "Price" %}: ${{ vehicle.price_in_usd }}</p>
+                <p>{% trans "Year of Manufacture" %}: {{ vehicle.year_of_manufacture }}</p>
             </div>
         </a>
     </li>

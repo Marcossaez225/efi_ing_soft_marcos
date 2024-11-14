@@ -1,24 +1,41 @@
 <!-- templates/partials/header.html -->
+{% load i18n %}
 <header>
     <nav>
         <ul>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'vehicle_list' %}">Cars</a></li>
+            <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+            <li><a href="{% url 'vehicle_list' %}">{% trans "Cars" %}</a></li>
             {% if is_authenticated %}
-                <li><a href="{% url 'profile' %}">Profile</a></li>
+                <li><a href="{% url 'profile' %}">{% trans "Profile" %}</a></li>
                 {% if is_staff %}
-                    <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                    <li><a href="{% url 'admin:index' %}">{% trans "Admin" %}</a></li>
                 {% endif %}
                 <li>
                     <form id="logout-form" action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="logout-button">Logout</button>
+                        <button type="submit" class="logout-button">{% trans "Logout" %}</button>
                     </form>
                 </li>
             {% else %}
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'register' %}">Register</a></li>
+                <li><a href="{% url 'login' %}">{% trans "Login" %}</a></li>
+                <li><a href="{% url 'register' %}">{% trans "Register" %}</a></li>
             {% endif %}
+            <!-- Añade el selector de idioma aquí -->
+            <li>
+                <form action="{% url 'set_language' %}" method="post">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ request.path }}" />
+                    <select name="language" onchange="this.form.submit()">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            <option value="{{ lang_code }}"{% if lang_code == LANGUAGE_CODE %} selected{% endif %}>
+                                {{ lang_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </li>
         </ul>
     </nav>
 </header>

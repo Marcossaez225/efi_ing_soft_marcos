@@ -1,16 +1,20 @@
-<!-- templates/users/profile.html -->
-
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}  
 
-{% block title %}User Profile{% endblock %}
+{% block title %}{% trans "User Profile" %}{% endblock %}
 
 {% block content %}
-<h2>My Profile</h2>
-<p>Welcome, {{ user.username }}!</p>
-<p>Email: {{ user.email }}</p>
+<h2>{% trans "My Profile" %}</h2>
 
-<h3>Followed Vehicles</h3>
+{% if user.is_authenticated %}
+    <p>{% trans "Welcome" %}, {{ user.username }}!</p>
+    <p>{% trans "Email" %}: {{ user.email }}</p>
+{% else %}
+    <p>{% trans "You are not logged in." %}</p>
+{% endif %}
+
+<h3>{% trans "Followed Vehicles" %}</h3>
 <ul>
   {% for follow in followed_vehicles %}
     <li style="display: flex; align-items: center; margin-bottom: 10px;">
@@ -18,7 +22,7 @@
         {% if vehicle_image %}
           <img src="{{ vehicle_image.image.url }}" alt="{{ follow.vehicle.model }}" style="width: 40px; height: 40px; margin-right: 10px; object-fit: cover;">
         {% else %}
-          <img src="{% static 'images/no_image_available.png' %}" alt="No Image Available" style="width: 40px; height: 40px; margin-right: 10px; object-fit: cover;">
+          <img src="{% static 'images/no_image_available.png' %}" alt="{% trans 'No Image Available' %}" style="width: 40px; height: 40px; margin-right: 10px; object-fit: cover;">
         {% endif %}
       {% endwith %}
       <a href="{% url 'vehicle_detail' follow.vehicle.id %}" style="text-decoration: none; color: inherit;">
@@ -30,7 +34,7 @@
       </form>
     </li>
   {% empty %}
-    <p>You are not following any vehicles.</p>
+    <p>{% trans "You are not following any vehicles." %}</p>
   {% endfor %}
 </ul>
 

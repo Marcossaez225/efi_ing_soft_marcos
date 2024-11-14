@@ -1,21 +1,21 @@
 <!-- templates/index.html -->
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}Didier's Car Dealership{% endblock %}
 
 {% block content %}
 <div class="welcome-container">
-    <h2>Welcome to Didier's Car Dealership</h2>
-    <p>At our dealership, we offer a curated selection of vehicles that cater to various needs and budgets. Whether you're looking for a family car, a luxury vehicle, or something sporty, you'll find it here.</p>
+    <h2>{% trans "Welcome to Didier's Car Dealership" %}</h2>
+    <p>{% trans "At our dealership, we offer a curated selection of vehicles that cater to various needs and budgets. Whether you're looking for a family car, a luxury vehicle, or something sporty, you'll find it here." %}</p>
 
     <div class="image-container">
         <img src="{% static 'images/homecar.jpg' %}" alt="Home Car" class="homecar-image">
     </div>
 
-    <p>Our platform allows you to follow your favorite vehicles, keeping you updated on any changes or offers. Additionally, you can leave comments and ask questions directly on each vehicle's page, making it easy to get all the information you need before making a decision.</p>
+    <p>{% trans "Our platform allows you to follow your favorite vehicles, keeping you updated on any changes or offers. Additionally, you can leave comments and ask questions directly on each vehicle's page, making it easy to get all the information you need before making a decision." %}</p>
 
-    <p><strong>Trust in the experience of Didier Oliva – a recognized and reliable name in the car dealership industry. Start exploring our collection today and find your next car with confidence.</strong></p>
+    <p><strong>{% trans "Trust in the experience of Didier Oliva – a recognized and reliable name in the car dealership industry. Start exploring our collection today and find your next car with confidence." %}</strong></p>
 </div>
 {% endblock %}
-d
