@@ -1,4 +1,6 @@
 <!-- templates/partials/footer.html -->
+{% load i18n %}
+
 <footer>
     <div class="footer-content">
         <!-- Nombre del concesionario -->
@@ -6,10 +8,9 @@
         
         <!-- Información de contacto cargada dinámicamente -->
         <p>
-            Contact: 
+            {% trans "Contact" %}: 
             <a href="mailto:{{ contact_email }}">{{ contact_email }}</a> | 
             <a href="tel:{{ contact_phone }}">{{ contact_phone }}</a>
         </p>
-
     </div>
 </footer>

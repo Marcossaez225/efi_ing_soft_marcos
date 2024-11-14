@@ -1,13 +1,14 @@
 <!-- templates/users/register.html -->
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Register{% endblock %}
+{% block title %}{% trans "Register" %}{% endblock %}
 
 {% block content %}
-<h2>Register</h2>
+<h2>{% trans "Register" %}</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }} <!-- Renders the form fields as defined in the form class -->
-    <button type="submit">Register</button>
+    <button type="submit">{% trans "Register" %}</button>
 </form>
 {% endblock %}
