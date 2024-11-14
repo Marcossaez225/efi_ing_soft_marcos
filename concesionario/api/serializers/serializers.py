@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from vehicles.models import Brand, Country, Vehicle, FollowedVehicle, Comment, VehicleImage
+from vehicles.models import Brand, Country, Vehicle, FollowedVehicle, Comment, VehicleImage, Client
 
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
@@ -50,3 +50,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email'] 
+
+class ClientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Client
+        fields = '__all__'
+        read_only_fields = ['created_at', 'updated_at']

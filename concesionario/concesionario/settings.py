@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 # External libraries and frameworks
 EXTERNAL_APPS = [
     'rest_framework',  # Django REST framework for API
+    'rest_framework.authtoken',
     'django_filters',  # Django filters for API filtering
     'drf_yasg', # Swagger generator
 ]
@@ -127,3 +128,13 @@ LOGIN_REDIRECT_URL = 'profile'
 
 # Logout redirection
 LOGOUT_REDIRECT_URL = 'home'  
+
+# Django REST Framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}

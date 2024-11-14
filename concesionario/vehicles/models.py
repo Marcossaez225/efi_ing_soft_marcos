@@ -112,3 +112,25 @@ class VehicleImage(models.Model):
 
     def __str__(self):
         return f"Image for {self.vehicle.model}"
+
+
+# vehicles/models.py
+
+class Client(models.Model):
+    """Modelo para representar un cliente de la concesionaria."""
+    
+    # Asociado opcionalmente a un usuario del sistema
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True)
+    
+    # Información básica de contacto
+    full_name = models.CharField(max_length=100)
+    email = models.EmailField(blank=True, null=True)  # Email opcional
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+    
+    # Información adicional
+    date_joined = models.DateTimeField(auto_now_add=True)  # Fecha de registro como cliente
+    notes = models.TextField(blank=True, null=True)  # Campo para notas sobre el cliente
+
+    def __str__(self):
+        return self.full_name or f"Cliente {self.id}"

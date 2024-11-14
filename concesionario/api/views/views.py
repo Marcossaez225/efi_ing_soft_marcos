@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User
 from rest_framework import generics, permissions
-from vehicles.models import Brand, Vehicle, Comment
+from vehicles.models import Brand, Vehicle, Comment, Client
 from api.serializers.serializers import (
     BrandSerializer,
     VehicleSerializer,
     CommentSerializer,
     UserSerializer,
+    ClientSerializer,
 )
 
 
@@ -32,3 +33,14 @@ class VehicleCommentListView(generics.ListAPIView):
     def get_queryset(self):
         vehicle_id = self.kwargs['vehicle_id']
         return Comment.objects.filter(vehicle__id=vehicle_id)
+
+class ClientCreateView(generics.CreateAPIView):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+
+class ClientListView(generics.ListAPIView):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+    permission_classes = [permissions.IsAdminUser]

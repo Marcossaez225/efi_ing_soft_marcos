@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Brand, Country, Vehicle, Comment, VehicleImage
+from .models import Brand, Country, Vehicle, Comment, VehicleImage, Client
+
+admin.site.register(Client)
 
 class VehicleImageInline(admin.TabularInline):
     model = VehicleImage
