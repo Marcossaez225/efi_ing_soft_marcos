@@ -1,136 +1,136 @@
 # Concesionario Django Project
 
-Welcome to the **Concesionario Django Project**! This web application, developed as part of the ITEC Río Cuarto program, is designed to manage a car dealership. The project explores the full capabilities of Django using the Model-Template-View (MTV) architecture.
+Bienvenido al **Proyecto de consecionario en Django**! Esta aplicación web, desarrollada como parte de la carrera de desarrollo de software de ITEC Río Cuarto Argentina, está diseñado para manejar una consesionaria. El proyecto explora todo el potencial de Django usando la arquitectura Model-Template-View (MTV).
 
-**Please note that this project is currently in development and is not intended for production use.** It serves as a course assignment, with the primary goal of showcasing Django's features in a controlled environment.
+**Este proyecto está en proceso y no está hecho para su uso en produción.** Sirve como una asignación de curso, con el principal objetivo de demostrar las carácteristicas de Django en un entorno controlado.
 
 ![](assets/readme/vehicledetail.png)
 
 
-## Table of Contents
+## Tabla de contenidos
 
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
+- [Carácteristicas](#Carácteristicas)
+- [Instalación](#instalación)
+- [Uso](#uso)
+- [Créditos](#créditos)
 
-## Features
+## Carácteristicas
 
-- **App Structure**: The project is organized into four main Django apps: `Vehicles`, `Comments`, `Users`, and `Media`, each handling different aspects of the application.
-- **No JavaScript**: The project is built purely using Django's Model-Template-View architecture with Python and HTML, without any JavaScript.
-- **Image Management**: Images are stored with unique filenames generated using UUIDs to avoid conflicts and ensure consistency.
-- **Admin Capabilities**: Admin users have full management capabilities, including uploading and managing images through both the frontend interface and the Django admin backend.
-- **User Roles**: The application supports different user roles, each with varying permissions.
-- **User Registration and Authentication**: Secure user registration, login, and logout processes.
-- **Vehicle Management**: Admins can add, update, and delete vehicles, and upload images.
-- **Commenting System**: Users can leave comments on vehicles, with admins and moderators managing these comments.
-- **Vehicle Following**: Users can follow specific vehicles and view them in their profiles.
-- **Dynamic Filtering**: In the admin panel, vehicles can be filtered by various criteria such as brand, price, and year of manufacture.
-- **Context Processors**: Custom context processors dynamically inject user status into templates.
+- **Estructura de la aplicación**: El proyecto está organizado en 4 aplicaciones principales en Django: `Vehicles`, `Comments`, `Users`, y `Media`, cada uno manejando distintos aspectos de la aplicación.
+- **Sin JavaScript**: El proyecto está enteramente hecho usando la arquitectura Model-Template-View de Django y con Python y HTML, sin nada de JavaScript.
+- **Manejo de imágenes**: Las imágenes están almaceneadas con nombres de archivos unicos generados usando UUIDs para evitar conflictos y asegurar consistencia.
+- **Capacidades de administrador**: Los usuarios administradores tienen control absoluto de gestión, incluyendo subir y administrar imagénes através tanto de la interfaz frontend y el backend de administrador de Django.
+- **Roles de usuario**: La aplicación posee diferentes roles de usuarios, cada uno con permisos variantes.
+- **Registro de usuarios y aunteticación**: Proceso seguro de reigstro, inicio y cierre de sesión.
+- **Administración de vehiculos**: Los administradores puede añadir, actualizar y borrar vehiculos, y subir imagénes.
+- **Sistema de comentarios**: Los usuarios pueden dejar comentarios en los vehiculos con los administradores y moderadores siendo capaces de administrar estos comentarios.
+- **Seguimiento de vehiculos**: Los usuarios pueden seguir vehiculos en específico y verlos en sus perfiles.
+- **Filtrado Dinamico**: En el panel de administración, los vehiculos pueden ser filtrados por varios criterios tales como, marca, precio, y año de manufactura.
+- **Context Processors**: Unos Custom context processors inyectan los estados de usuario en templates.
 
 
-## Installation
+## Instalación
 
-### Prerequisites
+### Prerrequisitos
 
-Before you begin, ensure you have met the following requirements:
+Antes de empezar, asegurese de que cumple con los siguientes requerimientos:
 
-- Python 3.10 or higher
-- Django 5.1 or higher
-- A virtual environment tool like `venv` or `virtualenv`
-- Git for version control
+- Python 3.10 o superior
+- Django 5.1 o superior
+- Una herramienta para entornos virtuales como `venv` o `virtualenv`
+- Git para control de versiones
 
-### Steps
+### Pasos
 
-1. **Clone the Repository**
+1. **Clonar el repositorio**
 
     ```bash
-    git clone https://github.com/Did11/oliva-django-concesionario.git
-    cd oliva-django-concesionario
+    git clone https://github.com/Did11/saez-django-concesionario.git
+    cd saez-django-concesionario
     ```
 
-2. **Set Up the Virtual Environment**
+2. **Crear un entorno virtual**
 
     ```bash
     python3 -m venv entorno
-    source entorno/bin/activate  # On Windows use `entorno\Scripts\activate`
+    source entorno/bin/activate  # En Windows use `entorno\Scripts\activate`
     ```
 
-3. **Install Dependencies**
+3. **Instalar Dependencias**
 
     ```bash
     pip install -r requirements.txt
     ```
 
-4. **Run the Development Server**
+4. **Activa el servidor de desarrollo**
 
     ```bash
     python3 concesionario/manage.py runserver
     ```
 
-The project will be available at `http://127.0.0.1:8000`.
+El proyecto estará disponible en `http://127.0.0.1:8000`.
 
-*Note: The project comes with a pre-populated database, including admin users and demo data, so no need to create a new superuser or apply migrations.*
+*Nota: El proyecto viene con una base de datos pre-poblada, incluyendo usuarios administradores y datos de demostración, así que no hace falta añadir un nuevo superuser o aplicar migraciones.*
 
 ![](assets/readme/comments.png)
-## Usage
+## Uso
 
-- **Admin Panel**: Access the admin panel at `http://127.0.0.1:8000/admin/` using the superuser credentials. From here, you can manage vehicles, images, comments, and user roles with full control.
-- **Vehicle Listings**: Explore the comprehensive list of vehicles by visiting the cars section at `http://127.0.0.1:8000/vehicles/`. Users can filter vehicles by various criteria, view detailed information, and interact with features like commenting and following vehicles.
-- **User Profile**: After logging in, users can access their profile at `http://127.0.0.1:8000/profile/` to manage their followed vehicles, edit their comments, and update their account details.
-**Django Shell**: You can access the Django shell for advanced management and testing by running the following command in your terminal:
+- **Panel de administrador**: Acceda al panel de administrador en `http://127.0.0.1:8000/admin/` usando credenciales de superuser. Desde aquí, puede administrar vehiculos, imágenes, comentarios, y roles de usuario con total control.
+- **Listado de vehiculos**: Explora la comprensible lista de vehiculos al visitar la sección de autos en `http://127.0.0.1:8000/vehicles/`. Los usuarios pueden filtrar los vehiculos por distintos críterios, ver información detallada, e interactuar con carácteristicas tales como comentar y seguir vehiculos.
+- **Perfil de usuario**: Tras iniciar sesión, los usuarios pueden acceder a su perfil en `http://127.0.0.1:8000/profile/` para administrar los vehiculos seguidos, editar sus comentarios, y actualizar los detalles de sus cuentas.
+**Shell de Django**: Puedes acceder a la shell de Django para un testeo y manejo avazados usando el siguiente comando en tu terminal:
 
     ```bash
     python3 concesionario/manage.py shell
     ```
 
-    From here, you can interact with your Django models and perform database queries directly.
+    Desde aquí, se puede interactuar con tus modelos de Django y realizar consultas a la base de datos.
 
-## API Documentation
+## Documentación de la API
 
-This project includes a RESTful API that allows external applications to access and manage dealership data, including vehicles, users, comments, and more. The API is documented with Swagger, which provides an interactive UI to explore and test each endpoint.
+Este proyecto incluye una API REST que le permite a aplicaciones externas acceder y gestionar datos del consecionario, incluyendo vehiculos, usuarios, comentarios, y más. La API está documentada con Swagger, el cual provee una interfaz de usuario interactiva para explorar y probar cada endpoint.
 
-### Accessing the API
+### Acediendo a la API
 
-- **API Root**: The API is accessible at `http://127.0.0.1:8000/api/`.
-- **Authentication**: Most endpoints require authentication via token. To obtain a token, use the `/token-auth/` endpoint and include it in the headers for authenticated requests.
-- **Swagger Documentation**: The full API documentation is available at `http://127.0.0.1:8000/swagger/`. Swagger offers a UI to test each endpoint, view input/output details, and explore parameter options.
+- **API Root**: La API es accessible en `http://127.0.0.1:8000/api/`.
+- **Authenticación**: la mayoría de endpoints requieren authenticación via token. para obtener un token, use el endpoit `/token-auth/` e incluyalo en los headers para peticiones auntenticadas.
+- **Documentación de Swagger**: La documentación completa de la API está disponible en `http://127.0.0.1:8000/swagger/`. Swagger ofrece una interfaz para probar cad endpoint, ver detalles de input/output, y explorar opciones de parametros.
 
-### Key API Endpoints
+### Endpoints clave de la API
 
-| Endpoint                       | Method | Description                                        |
+| Endpoint                       | Método | Descripción                                        |
 |--------------------------------|--------|----------------------------------------------------|
-| `/api/brands/`                 | GET    | Retrieve a list of all vehicle brands.             |
-| `/api/vehicles/`               | GET    | Retrieve a list of vehicles with filtering options.|
-| `/api/users/`                  | GET    | Retrieve a list of users (admin access required).  |
-| `/api/vehicles/<id>/comments/` | GET    | Retrieve comments for a specific vehicle.          |
-| `/api/clients/create/`         | POST   | Create a new client (admin access required).       |
-| `/api/clients/`                | GET    | Retrieve a list of clients (admin access required).|
-| `/api/token-auth/`             | POST   | Obtain an authentication token for API requests.   |
+| `/api/brands/`                 | GET    | Devuelve una lista con todas las marcas.           |
+| `/api/vehicles/`               | GET    | Devuelve una lista de autos con distintos criterios|
+| `/api/users/`                  | GET    | Devuelve una lista de usuarios (se requiere acceso de administrador).  |
+| `/api/vehicles/<id>/comments/` | GET    | Devuelve comentarios de un vehículo en especifico.          |
+| `/api/clients/create/`         | POST   | Crea un nuevo cliente (se requiere acceso de administrador).       |
+| `/api/clients/`                | GET    | Devuelve una lista de clientes (se requiere acceso de administrador).|
+| `/api/token-auth/`             | POST   | Se obtiene un toke de auntenticación API requests.   |
 
-### Example: Using the API with Postman
+### Ejemplo: Usando la API con Postman
 
-1. **Authenticate**: Use the `/api/token-auth/` endpoint to obtain a token. Send a POST request with your username and password in the body.
-2. **Set the Token**: Copy the token from the response, then include it in the Authorization header for subsequent requests: `Authorization: Token <your_token>`.
-3. **Explore Endpoints**: Use Postman or Swagger to interact with the various endpoints, making sure to include the token for endpoints that require authentication.
+1. **Autenticar**: Use el endpoint `/api/token-auth/` para conseguir un token. envie un POST request con su nombre de usuario y contraseña en el cuerpo.
+2. **Set the Token**: Copie el token de la respuesta, luego incluyalo en el header de autorización para las peticiones subecuentes: `Authorization: Token <tu_token>`.
+3. **Explore los Endpoints**: Use Postman o Swagger para interactuar con los varios endpoints, asegurandose de incluir el token para los endpoints que requieran auntenticación.
 
-### Available API Functionality
+### Funcionalidades disponibles de la API
 
-The API offers several features for managing dealership data:
-- **Vehicle Listings**: Retrieve and filter vehicle listings with details such as brand, model, year, and more.
-- **Commenting**: Access comments on specific vehicles and manage comments (with admin privileges).
-- **Client Management**: Admin users can create and list clients for the dealership.
-- **User Profiles**: Retrieve user profile information (admin access required).
+La API ofrece varias carácteristicas para el manejo de datos de un consecionario:
+- **Listado de vehiculos**: Devuelve y filtra un listado de vehiculos con detalles tales como marca, modelo, año, y más.
+- **Comentar**: Accede a comentarios en vehiculos especifico y gestiona dichos comentarios (con privilegios de administrador).
+- **Gestión de clientes**: Los usuarios administrador pueden crear y listar clientes para el consecionario.
+- **Perfiles de usuario**: Devuelve información de perfil de usuario (se requiere acesso de administrador).
 
-For complete endpoint documentation, including parameters and example responses, refer to the **Swagger documentation** at `http://127.0.0.1:8000/swagger/`.
+Para una documentación completa de los endpoint, incluyendo parametros y respuestas de ejemplo, vease la**Documentación de Swagger** en `http://127.0.0.1:8000/swagger/`.
 
 
 
-## Credits
+## Créditos
 
-- **Developed by**: Oliva, Didier. 
+- **Desarrollado por**: Saez, Marcos. 
 
-## License
+## Licencia
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
 

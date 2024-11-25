@@ -10,6 +10,8 @@ dist/
 # Virtual environment
 entorno/
 ent/
+env/
+venv/
 
 # Logs 
 *.log
