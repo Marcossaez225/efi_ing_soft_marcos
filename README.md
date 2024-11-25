@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Concesionario Django Project
 
 Bienvenido al **Proyecto de consecionario en Django**! Esta aplicación web, desarrollada como parte de la carrera de desarrollo de software de ITEC Río Cuarto Argentina, está diseñado para manejar una consesionaria. El proyecto explora todo el potencial de Django usando la arquitectura Model-Template-View (MTV).
@@ -135,3 +136,6 @@ Para una documentación completa de los endpoint, incluyendo parametros y respue
 This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ![](assets/readme/vehicles.png)
+=======
+# efi_ing_soft_marcos
+>>>>>>> 5e5b976928a40ce442b4147cd2ede915dbbbb2e3
